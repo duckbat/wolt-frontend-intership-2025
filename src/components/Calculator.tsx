@@ -29,15 +29,15 @@ interface CalculationResult {
 const Calculator: React.FC = () => {
   const [venueSlug, setVenueSlug] = useState<string>("");
   const [venueData, setVenueData] = useState<VenueData | null>(null);
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
+  const [latitude, setLatitude] = useState<string>(""); // Store as string
+  const [longitude, setLongitude] = useState<string>(""); // Store as string
   const [cartValue, setCartValue] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<CalculationResult | null>(null);
 
   const handleLocationFound = (lat: number, lon: number) => {
-    setLatitude(lat);
-    setLongitude(lon);
+    setLatitude(lat.toString()); // Convert to string
+    setLongitude(lon.toString()); // Convert to string
   };
 
   const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
@@ -55,7 +55,11 @@ const Calculator: React.FC = () => {
     return distanceInMeters; // Keep the precise value for calculations
   };
 
-  const calculateDeliveryFee = (distance: number, distanceRanges: VenueData["distanceRanges"], basePrice: number): number => {
+  const calculateDeliveryFee = (
+    distance: number,
+    distanceRanges: VenueData["distanceRanges"],
+    basePrice: number
+  ): number => {
     for (const range of distanceRanges) {
       const { min, max, a, b } = range;
       if (distance >= min && (max === 0 || distance < max)) {
@@ -73,6 +77,14 @@ const Calculator: React.FC = () => {
 
     if (!venueSlug || !latitude || !longitude || !cartValue) {
       setError("All fields are required.");
+      return;
+    }
+
+    // Validate latitude and longitude
+    const latNumber = parseFloat(latitude);
+    const lonNumber = parseFloat(longitude);
+    if (isNaN(latNumber) || isNaN(lonNumber)) {
+      setError("Invalid latitude or longitude.");
       return;
     }
 
@@ -101,10 +113,22 @@ const Calculator: React.FC = () => {
       setVenueData(venueData);
 
       // Calculate distance
-      const deliveryDistance = calculateDistance(latitude, longitude, venueData.location[1], venueData.location[0]);
+      const deliveryDistance = calculateDistance(
+        latNumber,
+        lonNumber,
+        venueData.location[1],
+        venueData.location[0]
+      );
+
+      // Round up the delivery distance to the nearest whole number
+      const roundedDeliveryDistance = Math.ceil(deliveryDistance);
 
       // Calculate delivery fee
-      const deliveryFee = calculateDeliveryFee(deliveryDistance, venueData.distanceRanges, venueData.basePrice);
+      const deliveryFee = calculateDeliveryFee(
+        roundedDeliveryDistance, // Use the rounded distance
+        venueData.distanceRanges,
+        venueData.basePrice
+      );
 
       // Calculate small order surcharge
       const cartValueInCents = parseFloat(cartValue) * 100;
@@ -118,7 +142,7 @@ const Calculator: React.FC = () => {
         cartValue: cartValueInCents,
         smallOrderSurcharge,
         deliveryFee,
-        deliveryDistance,
+        deliveryDistance: roundedDeliveryDistance, // Use the rounded distance
         totalPrice,
       });
     } catch (err) {
@@ -130,7 +154,12 @@ const Calculator: React.FC = () => {
     <div className="p-4 space-y-4 bg-gray-800 rounded-lg">
       <form onSubmit={handleSubmit} className="p-4 space-y-4">
         <VenueSlugInput venueSlug={venueSlug} setVenueSlug={setVenueSlug} />
-        <GetLocationInput latitude={latitude} longitude={longitude} setLatitude={setLatitude} setLongitude={setLongitude} />
+        <GetLocationInput
+          latitude={latitude}
+          longitude={longitude}
+          setLatitude={setLatitude}
+          setLongitude={setLongitude}
+        />
         <GetLocationButton onLocationFound={handleLocationFound} />
         <CartValueInput cartValue={cartValue} setCartValue={setCartValue} />
         {error && <p className="text-red-500">{error}</p>}
@@ -144,7 +173,7 @@ const Calculator: React.FC = () => {
           <h3 className="text-lg font-bold">Price Breakdown</h3>
           <p>Cart Value: {(result.cartValue / 100).toFixed(2)} EUR</p>
           <p>Delivery Fee: {(result.deliveryFee / 100).toFixed(2)} EUR</p>
-          <p>Delivery Distance: {result.deliveryDistance.toFixed(2)} meters</p>
+          <p>Delivery Distance: {result.deliveryDistance} meters</p> {/* No decimal places */}
           <p>Small Order Surcharge: {(result.smallOrderSurcharge / 100).toFixed(2)} EUR</p>
           <p>Total Price: {(result.totalPrice / 100).toFixed(2)} EUR</p>
         </div>

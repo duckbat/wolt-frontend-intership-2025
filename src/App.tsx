@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <h1>Wolt Assignment</h1>
+      <h1 className="font-mono font-extrabold">Wolt Assignment</h1>
       <Calculator />
     </>
   );
