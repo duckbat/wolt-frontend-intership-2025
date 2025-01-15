@@ -24,11 +24,11 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
         <input
           id="venueSlug"
           name="venueSlug"
-          value={venueSlug}
           onChange={handleInputChange}
           onBlur={onBlur} // Pass onBlur prop to the input
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Venue Slug"
+          value={venueSlug}
           data-test-id="venueSlug"
         />
       </div>

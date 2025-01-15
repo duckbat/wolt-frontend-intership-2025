@@ -7,7 +7,7 @@ export interface VenueData {
     max: number;
     a: number;
     b: number;
-    flag: any;
+    flag?: any;
   }[];
 }
 

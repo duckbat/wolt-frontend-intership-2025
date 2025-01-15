@@ -8,13 +8,13 @@ export const useVenueData = () => {
   
     const fetchVenueData = async (venueSlug: string) => {
       try {
-        console.log("Fetching static data for:", venueSlug); // Debugging
+        console.log("Fetching static data for:", venueSlug);
         const staticData = await fetchVenueStatic(venueSlug.trim());
-        console.log("Static data:", staticData); // Debugging
+        console.log("Static data:", staticData);
   
-        console.log("Fetching dynamic data for:", venueSlug); // Debugging
+        console.log("Fetching dynamic data for:", venueSlug);
         const dynamicData = await fetchVenueDynamic(venueSlug.trim());
-        console.log("Dynamic data:", dynamicData); // Debugging
+        console.log("Dynamic data:", dynamicData);
   
         const venueData: VenueData = {
           location: staticData.venue_raw.location.coordinates,
@@ -28,7 +28,7 @@ export const useVenueData = () => {
         setVenueData(venueData);
         setError(null);
       } catch (err) {
-        console.error("Error fetching venue data:", err); // Debugging
+        console.error("Error fetching venue data:", err);
         setError("Failed to fetch venue data.");
         setVenueData(null);
       }

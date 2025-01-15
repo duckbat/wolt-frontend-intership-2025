@@ -19,7 +19,6 @@ const Calculator: React.FC = () => {
 
   const { venueData, error: venueError, fetchVenueData } = useVenueData();
 
-  // Fetch venue data when the user finishes typing (on blur)
   const handleVenueSlugBlur = async () => {
     if (venueSlug) {
       console.log("Fetching venue data for slug:", venueSlug);
@@ -48,13 +47,10 @@ const Calculator: React.FC = () => {
     }
 
     try {
-      // Check if venueData is available
       if (!venueData) {
         setError("Failed to fetch venue data.");
         return;
       }
-
-      // Proceed with calculations
       const deliveryDistance = calculateDistance(
         latNumber,
         lonNumber,
@@ -85,11 +81,11 @@ const Calculator: React.FC = () => {
         deliveryDistance: roundedDeliveryDistance,
         totalPrice,
       });
-      setError(null); // Clear any previous errors
+      setError(null);
     } catch (err) {
-      console.error("Error:", err); // Log the error for debugging
+      console.error("Error:", err);
       setError("Delivery is not available, you live too far.");
-      setResult(null); // Clear the result
+      setResult(null);
     }
   };
 
@@ -101,7 +97,7 @@ const Calculator: React.FC = () => {
         <VenueSlugInput
           venueSlug={venueSlug}
           setVenueSlug={setVenueSlug}
-          onBlur={handleVenueSlugBlur} // Fetch data on blur
+          onBlur={handleVenueSlugBlur}
         />
         <CartValueInput cartValue={cartValue} setCartValue={setCartValue} />
         <GetLocationInput
@@ -113,7 +109,11 @@ const Calculator: React.FC = () => {
         <GetLocationButton onLocationFound={handleLocationFound} />
         {error && <p className="text-red-500">{error}</p>}
         {venueError && <p className="text-red-500">{venueError}</p>}
-        <CalculateButton onClick={handleSubmit} disabled={!isFormValid} />
+        <CalculateButton
+          onClick={handleSubmit}
+          disabled={!isFormValid}
+          data-test-id="calculateButton"
+        />
       </form>
 
       {result && <PriceBreakdown result={result} />}

@@ -26,6 +26,7 @@ const GetLocationButton: React.FC<GetLocationButtonProps> = ({ onLocationFound }
       type="button"
       onClick={handleGetLocation}
       className="p-2 bg-blue-500 text-white rounded"
+      data-test-id="getLocation"
     >
       Get Location
     </button>

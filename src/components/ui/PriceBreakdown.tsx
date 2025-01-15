@@ -6,17 +6,28 @@ interface PriceBreakdownProps {
 }
 
 const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ result }) => {
+  const {
+    cartValue,
+    deliveryFee,
+    deliveryDistance,
+    smallOrderSurcharge,
+    totalPrice,
+  } = result;
+
+  // Convert to readable strings (e.g., EUR)
+  const cartValueEur = (cartValue / 100).toFixed(2);
+  const deliveryFeeEur = (deliveryFee / 100).toFixed(2);
+  const surchargeEur = (smallOrderSurcharge / 100).toFixed(2);
+  const totalPriceEur = (totalPrice / 100).toFixed(2);
+
   return (
     <div className="p-4 mt-4 bg-gray-700 rounded-lg">
-      <h3 className="text-lg font-bold">Price Breakdown</h3>
-      <p>Cart Value: {(result.cartValue / 100).toFixed(2)} EUR</p>
-      <p>Delivery Fee: {(result.deliveryFee / 100).toFixed(2)} EUR</p>
-      <p>Delivery Distance: {result.deliveryDistance} meters</p>
-      <p>
-        Small Order Surcharge: {(result.smallOrderSurcharge / 100).toFixed(2)}{" "}
-        EUR
-      </p>
-      <p>Total Price: {(result.totalPrice / 100).toFixed(2)} EUR</p>
+      <h3>Price Breakdown</h3>
+      <p data-raw-value={cartValue}>Cart Value: {cartValueEur} EUR</p>
+      <p data-raw-value={deliveryFee}>Delivery Fee: {deliveryFeeEur} EUR</p>
+      <p data-raw-value={deliveryDistance}>Delivery Distance: {deliveryDistance} meters</p>
+      <p data-raw-value={smallOrderSurcharge}>Small Order Surcharge: {surchargeEur} EUR</p>
+      <p data-raw-value={totalPrice}>Total Price: {totalPriceEur} EUR</p>
     </div>
   );
 };

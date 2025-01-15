@@ -9,5 +9,7 @@
     "module": "ESNext",
     "target": "ESNext",
     "jsx": "react-jsx",
+    "types": ["vitest"],
+    "esModuleInterop": true,
   }
 }
