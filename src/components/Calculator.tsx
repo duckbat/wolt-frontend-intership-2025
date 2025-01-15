@@ -1,75 +1,35 @@
 import React, { useState } from "react";
-import { fetchVenueStatic, fetchVenueDynamic } from "../utils/api";
-import GetLocationButton from "./Buttons/GetLocationButton";
-import VenueSlugInput from "./Inputs/VenueSlugInput";
-import CartValueInput from "./Inputs/CartValueInput";
-import GetLocationInput from "./Inputs/GetLocationInput";
-
-export interface VenueData {
-  location: [number, number]; // [longitude, latitude]
-  orderMinimumNoSurcharge: number;
-  basePrice: number;
-  distanceRanges: {
-    min: number;
-    max: number;
-    a: number;
-    b: number;
-    flag: any; // Ignored
-  }[];
-}
-
-interface CalculationResult {
-  cartValue: number;
-  smallOrderSurcharge: number;
-  deliveryFee: number;
-  deliveryDistance: number;
-  totalPrice: number;
-}
+import { useVenueData } from "../hooks/useVenueData";
+import { calculateDistance, calculateDeliveryFee } from "../utils/calculation";
+import GetLocationButton from "./ui/Buttons/GetLocationButton";
+import VenueSlugInput from "./ui/Inputs/VenueSlugInput";
+import CartValueInput from "./ui/Inputs/CartValueInput";
+import GetLocationInput from "./ui/Inputs/GetLocationInput";
+import PriceBreakdown from "./ui/PriceBreakdown";
+import CalculateButton from "./ui/Buttons/CalculateButton";
+import { CalculationResult } from "../types";
 
 const Calculator: React.FC = () => {
   const [venueSlug, setVenueSlug] = useState<string>("");
-  const [venueData, setVenueData] = useState<VenueData | null>(null);
-  const [latitude, setLatitude] = useState<string>(""); // Store as string
-  const [longitude, setLongitude] = useState<string>(""); // Store as string
+  const [latitude, setLatitude] = useState<string>("");
+  const [longitude, setLongitude] = useState<string>("");
   const [cartValue, setCartValue] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<CalculationResult | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const { venueData, error: venueError, fetchVenueData } = useVenueData();
+
+  // Fetch venue data when the user finishes typing (on blur)
+  const handleVenueSlugBlur = async () => {
+    if (venueSlug) {
+      console.log("Fetching venue data for slug:", venueSlug);
+      await fetchVenueData(venueSlug);
+    }
+  };
 
   const handleLocationFound = (lat: number, lon: number) => {
-    setLatitude(lat.toString()); // Convert to string
-    setLongitude(lon.toString()); // Convert to string
-  };
-
-  const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
-    const toRadians = (deg: number) => (deg * Math.PI) / 180;
-    const R = 6371e3; // Earth's radius in meters
-    const φ1 = toRadians(lat1);
-    const φ2 = toRadians(lat2);
-    const Δφ = toRadians(lat2 - lat1);
-    const Δλ = toRadians(lon2 - lon1);
-    const a =
-      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    const distanceInMeters = R * c;
-    return distanceInMeters; // Keep the precise value for calculations
-  };
-
-  const calculateDeliveryFee = (
-    distance: number,
-    distanceRanges: VenueData["distanceRanges"],
-    basePrice: number
-  ): number => {
-    for (const range of distanceRanges) {
-      const { min, max, a, b } = range;
-      if (distance >= min && (max === 0 || distance < max)) {
-        if (max === 0) {
-          throw new Error("Delivery not available for this distance.");
-        }
-        return basePrice + a + Math.round((b * distance) / 10);
-      }
-    }
-    throw new Error("Delivery not available for this distance.");
+    setLatitude(lat.toString());
+    setLongitude(lon.toString());
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -80,7 +40,6 @@ const Calculator: React.FC = () => {
       return;
     }
 
-    // Validate latitude and longitude
     const latNumber = parseFloat(latitude);
     const lonNumber = parseFloat(longitude);
     if (isNaN(latNumber) || isNaN(lonNumber)) {
@@ -88,31 +47,14 @@ const Calculator: React.FC = () => {
       return;
     }
 
-    setError(null);
-    setResult(null);
-
     try {
-      // Fetch venue data
-      const staticData = await fetchVenueStatic(venueSlug.trim());
-      const dynamicData = await fetchVenueDynamic(venueSlug.trim());
+      // Check if venueData is available
+      if (!venueData) {
+        setError("Failed to fetch venue data.");
+        return;
+      }
 
-      // Extract relevant fields
-      const location = staticData.venue_raw.location.coordinates;
-      const orderMinimumNoSurcharge =
-        dynamicData.venue_raw.delivery_specs.order_minimum_no_surcharge;
-      const basePrice = dynamicData.venue_raw.delivery_specs.delivery_pricing.base_price;
-      const distanceRanges = dynamicData.venue_raw.delivery_specs.delivery_pricing.distance_ranges;
-
-      const venueData: VenueData = {
-        location,
-        orderMinimumNoSurcharge,
-        basePrice,
-        distanceRanges,
-      };
-
-      setVenueData(venueData);
-
-      // Calculate distance
+      // Proceed with calculations
       const deliveryDistance = calculateDistance(
         latNumber,
         lonNumber,
@@ -120,40 +62,48 @@ const Calculator: React.FC = () => {
         venueData.location[0]
       );
 
-      // Round up the delivery distance to the nearest whole number
       const roundedDeliveryDistance = Math.ceil(deliveryDistance);
 
-      // Calculate delivery fee
       const deliveryFee = calculateDeliveryFee(
-        roundedDeliveryDistance, // Use the rounded distance
+        roundedDeliveryDistance,
         venueData.distanceRanges,
         venueData.basePrice
       );
 
-      // Calculate small order surcharge
       const cartValueInCents = parseFloat(cartValue) * 100;
-      const smallOrderSurcharge = Math.max(venueData.orderMinimumNoSurcharge - cartValueInCents, 0);
+      const smallOrderSurcharge = Math.max(
+        venueData.orderMinimumNoSurcharge - cartValueInCents,
+        0
+      );
 
-      // Calculate total price
       const totalPrice = cartValueInCents + smallOrderSurcharge + deliveryFee;
 
-      // Set the result
       setResult({
         cartValue: cartValueInCents,
         smallOrderSurcharge,
         deliveryFee,
-        deliveryDistance: roundedDeliveryDistance, // Use the rounded distance
+        deliveryDistance: roundedDeliveryDistance,
         totalPrice,
       });
+      setError(null); // Clear any previous errors
     } catch (err) {
-      setError((err as Error).message || "Failed to fetch venue data.");
+      console.error("Error:", err); // Log the error for debugging
+      setError("Delivery is not available, you live too far.");
+      setResult(null); // Clear the result
     }
   };
+
+  const isFormValid = venueSlug && latitude && longitude && cartValue;
 
   return (
     <div className="p-4 space-y-4 bg-gray-800 rounded-lg">
       <form onSubmit={handleSubmit} className="p-4 space-y-4">
-        <VenueSlugInput venueSlug={venueSlug} setVenueSlug={setVenueSlug} />
+        <VenueSlugInput
+          venueSlug={venueSlug}
+          setVenueSlug={setVenueSlug}
+          onBlur={handleVenueSlugBlur} // Fetch data on blur
+        />
+        <CartValueInput cartValue={cartValue} setCartValue={setCartValue} />
         <GetLocationInput
           latitude={latitude}
           longitude={longitude}
@@ -161,23 +111,12 @@ const Calculator: React.FC = () => {
           setLongitude={setLongitude}
         />
         <GetLocationButton onLocationFound={handleLocationFound} />
-        <CartValueInput cartValue={cartValue} setCartValue={setCartValue} />
         {error && <p className="text-red-500">{error}</p>}
-        <button type="submit" className="p-2 bg-green-500 text-white rounded">
-          Calculate delivery price
-        </button>
+        {venueError && <p className="text-red-500">{venueError}</p>}
+        <CalculateButton onClick={handleSubmit} disabled={!isFormValid} />
       </form>
 
-      {result && (
-        <div className="p-4 mt-4 bg-gray-700 rounded-lg">
-          <h3 className="text-lg font-bold">Price Breakdown</h3>
-          <p>Cart Value: {(result.cartValue / 100).toFixed(2)} EUR</p>
-          <p>Delivery Fee: {(result.deliveryFee / 100).toFixed(2)} EUR</p>
-          <p>Delivery Distance: {result.deliveryDistance} meters</p> {/* No decimal places */}
-          <p>Small Order Surcharge: {(result.smallOrderSurcharge / 100).toFixed(2)} EUR</p>
-          <p>Total Price: {(result.totalPrice / 100).toFixed(2)} EUR</p>
-        </div>
-      )}
+      {result && <PriceBreakdown result={result} />}
     </div>
   );
 };

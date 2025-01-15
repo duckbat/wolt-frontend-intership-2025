@@ -3,9 +3,14 @@ import React from "react";
 interface VenueSlugInputProps {
   venueSlug: string;
   setVenueSlug: (value: string) => void;
+  onBlur?: () => void; // Add optional onBlur prop
 }
 
-const VenueSlugInput: React.FC<VenueSlugInputProps> = ({ venueSlug, setVenueSlug }) => {
+const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
+  venueSlug,
+  setVenueSlug,
+  onBlur,
+}) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setVenueSlug(e.target.value);
   };
@@ -21,6 +26,7 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({ venueSlug, setVenueSlug
           name="venueSlug"
           value={venueSlug}
           onChange={handleInputChange}
+          onBlur={onBlur} // Pass onBlur prop to the input
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Venue Slug"
           data-test-id="venueSlug"
