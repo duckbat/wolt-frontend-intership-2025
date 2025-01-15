@@ -3,7 +3,7 @@ import React from "react";
 interface VenueSlugInputProps {
   venueSlug: string;
   setVenueSlug: (value: string) => void;
-  onBlur?: () => void; // Add optional onBlur prop
+  onBlur?: () => void; // onBlur prop to fetch API data when venue slug is entered
 }
 
 const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
@@ -25,7 +25,7 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
           id="venueSlug"
           name="venueSlug"
           onChange={handleInputChange}
-          onBlur={onBlur} // Pass onBlur prop to the input
+          onBlur={onBlur}
           className="w-full p-2 border border-gray-300 rounded"
           placeholder="Venue Slug"
           value={venueSlug}

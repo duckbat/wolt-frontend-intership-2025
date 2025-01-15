@@ -14,7 +14,6 @@ const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ result }) => {
     totalPrice,
   } = result;
 
-  // Convert to readable strings (e.g., EUR)
   const cartValueEur = (cartValue / 100).toFixed(2);
   const deliveryFeeEur = (deliveryFee / 100).toFixed(2);
   const surchargeEur = (smallOrderSurcharge / 100).toFixed(2);

@@ -21,7 +21,7 @@ describe("Calculator Initial Test Case", () => {
         location: [24.93087, 60.17094],
         distanceRanges: [100, 200, 300, 700],
         basePrice: 100,
-        orderMinimumNoSurcharge: 1000, // 10 EUR in cents
+        orderMinimumNoSurcharge: 1000,
       },
       error: null,
       fetchVenueData: vi.fn(),

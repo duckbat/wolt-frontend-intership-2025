@@ -12,7 +12,7 @@ const CartValueInput: React.FC<CartValueInputProps> = ({ cartValue, setCartValue
   };
 
   const rawValue = cartValue && !isNaN(parseFloat(cartValue))
-    ? (parseFloat(cartValue)).toString() // Convert to cents and stringify
+    ? (parseFloat(cartValue)).toString()
     : ""; // Fallback to an empty string if invalid
 
   return (
@@ -26,7 +26,7 @@ const CartValueInput: React.FC<CartValueInputProps> = ({ cartValue, setCartValue
         onChange={handleInputChange}
         className="w-full p-2 border border-gray-300 rounded"
         placeholder="Enter cart value"
-        value={rawValue} // Ensure valid string value
+        value={rawValue}
         data-test-id="cartValue"
       />
     </div>

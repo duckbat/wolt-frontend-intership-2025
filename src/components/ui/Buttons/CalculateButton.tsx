@@ -1,7 +1,7 @@
 import React from "react";
 
 interface CalculateButtonProps {
-  onClick: (e: React.FormEvent) => void; // Update to accept FormEvent
+  onClick: (e: React.FormEvent) => void;
   disabled?: boolean;
 }
 
