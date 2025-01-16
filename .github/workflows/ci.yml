@@ -1,10 +1,9 @@
-name: CI
+name: CI/CD with Vitest and Codecov
 
 on:
   push:
     branches:
       - main
-      - "feature/*"
   pull_request:
     branches:
       - main
@@ -12,7 +11,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -20,11 +18,21 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          cache: 'npm'
+          node-version: 18
 
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm run test -- --watch=false
+      - name: Run tests with coverage
+        run: npm run coverage
+
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload coverage report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/
