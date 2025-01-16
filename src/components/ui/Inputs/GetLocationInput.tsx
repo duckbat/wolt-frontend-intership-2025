@@ -31,7 +31,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
   };
 
   return (
-    <div className="flex row-auto space-x-3">
+    <div className="flex items-center justify-center row-auto space-x-3">
       <div>
         <label htmlFor="latitude" className="block mb-1">
           Latitude
