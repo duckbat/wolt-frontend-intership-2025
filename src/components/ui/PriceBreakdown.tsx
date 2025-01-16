@@ -20,7 +20,7 @@ const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ result }) => {
   const totalPriceEur = (totalPrice / 100).toFixed(2);
 
   return (
-    <div className="p-4 mt-4 bg-gray-700 rounded-lg">
+    <div className="p-4 mt-4">
       <h3>Price Breakdown</h3>
       <p data-raw-value={cartValue}>Cart Value: {cartValueEur} EUR</p>
       <p data-raw-value={deliveryFee}>Delivery Fee: {deliveryFeeEur} EUR</p>

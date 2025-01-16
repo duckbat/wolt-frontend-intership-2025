@@ -31,9 +31,9 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="flex row-auto space-x-3">
       <div>
-        <label htmlFor="latitude" className="block text-sm font-medium">
+        <label htmlFor="latitude" className="block mb-1">
           Latitude
         </label>
         <input
@@ -42,14 +42,13 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
           type="text"
           value={latitude}
           onChange={handleLatitudeChange}
-          className="w-full p-2 border border-gray-300 rounded"
           placeholder="60.17094"
           data-test-id="userLatitude"
         />
       </div>
 
       <div>
-        <label htmlFor="longitude" className="block text-sm font-medium">
+        <label htmlFor="longitude" className="block mb-1">
           Longitude
         </label>
         <input
@@ -58,7 +57,6 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
           type="text"
           value={longitude}
           onChange={handleLongitudeChange}
-          className="w-full p-2 border border-gray-300 rounded"
           placeholder="24.93087"
           data-test-id="userLongitude"
         />

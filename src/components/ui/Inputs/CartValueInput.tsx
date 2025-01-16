@@ -35,15 +35,15 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
   return (
     <div className="p-4 space-y-4">
       <div className="input-with-placeholder">
-        <label htmlFor="cartValue">Cart Value (EUR)</label>
+        <label htmlFor="cartValue">Cart Value</label>
         <input
           id="cartValue"
           name="cartValue"
           onChange={handleInputChange}
           onBlur={handleBlur}
-          className={`w-full p-2 border ${
+          className={` ${
             isEmpty ? "border-red-500" : "border-gray-300"
-          } rounded`}
+          } `}
           placeholder="420.69"
           value={cartValue}
           data-test-id="cartValue"

@@ -36,7 +36,7 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
   return (
     <div className="p-4 space-y-4">
       <div className="input-with-placeholder">
-        <label htmlFor="venueSlug" className="block text-sm font-medium">
+        <label htmlFor="venueSlug" className="font-regular">
           Venue Slug
         </label>
         <input
@@ -44,9 +44,9 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
           name="venueSlug"
           onChange={handleInputChange}
           onBlur={handleBlur}
-          className={`w-full p-2 border ${
+          className={`${
             isEmpty ? "border-red-500" : "border-gray-300"
-          } rounded`}
+          }`}
           placeholder="home-assignment-venue-helsinki"
           value={venueSlug}
           data-test-id="venueSlug"
