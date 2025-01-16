@@ -7,20 +7,22 @@ interface GetLocationInputProps {
   setLongitude: (longitude: string) => void;
 }
 
+// Input fields for latitude and longitude
 const GetLocationInput: React.FC<GetLocationInputProps> = ({
   latitude,
   longitude,
   setLatitude,
   setLongitude,
 }) => {
+  // Handle latitude input change
   const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    // Only numbers and a single decimal point
     if (/^-?\d*\.?\d*$/.test(value)) {
       setLatitude(value);
     }
   };
 
+  // Handle longitude input change
   const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^-?\d*\.?\d*$/.test(value)) {
@@ -41,7 +43,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
           value={latitude}
           onChange={handleLatitudeChange}
           className="w-full p-2 border border-gray-300 rounded"
-          placeholder="Your latitude"
+          placeholder="60.17094"
           data-test-id="userLatitude"
         />
       </div>
@@ -57,7 +59,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
           value={longitude}
           onChange={handleLongitudeChange}
           className="w-full p-2 border border-gray-300 rounded"
-          placeholder="Your longitude"
+          placeholder="24.93087"
           data-test-id="userLongitude"
         />
       </div>

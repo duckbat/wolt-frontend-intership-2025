@@ -1,28 +1,52 @@
-import { useState } from "react";
+import React from "react";
+import { useGeolocated } from "react-geolocated";
 
-export const useCurrentLocation = () => {
-  const [latitude, setLatitude] = useState<number | null>(null);
-  const [longitude, setLongitude] = useState<number | null>(null);
-  const [status, setStatus] = useState<string | null>(null);
+interface UseCurrentLocationReturn {
+  latitude: number | null;
+  longitude: number | null;
+  isGeolocationAvailable: boolean;
+  isGeolocationEnabled: boolean;
+  getPosition: () => void;
+  error: string | null;
+}
 
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      setStatus("Geolocation is not supported");
-      return;
-    }
+// Custom hook to get the current location of the user
+export const useCurrentLocation = (): UseCurrentLocationReturn => {
+  const {
+    coords,
+    isGeolocationAvailable,
+    isGeolocationEnabled,
+    getPosition,
+    positionError,
+  } = useGeolocated({
+    positionOptions: {
+      enableHighAccuracy: true,
+    },
+    userDecisionTimeout: 10000, // 10 seconds
+  });
 
-    setStatus("Locating...");
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLatitude(position.coords.latitude);
-        setLongitude(position.coords.longitude);
-        setStatus(null);
-      },
-      () => {
-        setStatus("Unable to get location.");
+  const error = React.useMemo(() => {
+    if (positionError) {
+      switch (positionError.code) {
+        case positionError.PERMISSION_DENIED:
+          return "Permission denied. Please enable location access.";
+        case positionError.POSITION_UNAVAILABLE:
+          return "Location information is unavailable.";
+        case positionError.TIMEOUT:
+          return "The request to get location timed out.";
+        default:
+          return "An unknown error occurred.";
       }
-    );
-  };
+    }
+    return null;
+  }, [positionError]);
 
-  return { latitude, longitude, status, getLocation };
+  return {
+    latitude: coords?.latitude || null,
+    longitude: coords?.longitude || null,
+    isGeolocationAvailable,
+    isGeolocationEnabled,
+    getPosition,
+    error,
+  };
 };

@@ -6,6 +6,10 @@ export default defineConfig({
   resolve: {
   },
   test: {
+    coverage: {
+      provider: "istanbul",
+      reporter: ['text', 'json', 'html'],
+    },
     environment: "jsdom",
     globals: true,
     setupFiles: ["./src/test/setup.ts"],

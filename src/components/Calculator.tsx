@@ -26,6 +26,7 @@ const Calculator: React.FC = () => {
     }
   };
 
+  // Function to handle location found
   const handleLocationFound = (lat: number, lon: number) => {
     setLatitude(lat.toString());
     setLongitude(lon.toString());
@@ -47,10 +48,15 @@ const Calculator: React.FC = () => {
     }
 
     try {
+      // Fetch venue data first
+      await fetchVenueData(venueSlug);
+
       if (!venueData) {
-        setError("Failed to fetch venue data.");
+        setError("Please, provide a valid venue slug.");
         return;
       }
+
+      // Perform calculations after fetching venue data
       const deliveryDistance = calculateDistance(
         latNumber,
         lonNumber,
@@ -94,11 +100,7 @@ const Calculator: React.FC = () => {
   return (
     <div className="p-4 space-y-4 bg-gray-800 rounded-lg">
       <form onSubmit={handleSubmit} className="p-4 space-y-4">
-        <VenueSlugInput
-          venueSlug={venueSlug}
-          setVenueSlug={setVenueSlug}
-          onBlur={handleVenueSlugBlur}
-        />
+        <VenueSlugInput venueSlug={venueSlug} setVenueSlug={setVenueSlug} onBlur={handleVenueSlugBlur}  />
         <CartValueInput cartValue={cartValue} setCartValue={setCartValue} />
         <GetLocationInput
           latitude={latitude}
@@ -106,6 +108,7 @@ const Calculator: React.FC = () => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
         />
+        {/* Pass handleLocationFound to GetLocationButton */}
         <GetLocationButton onLocationFound={handleLocationFound} />
         {error && <p className="text-red-500">{error}</p>}
         {venueError && <p className="text-red-500">{venueError}</p>}

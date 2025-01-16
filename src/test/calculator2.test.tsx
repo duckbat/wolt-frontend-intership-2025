@@ -47,7 +47,9 @@ describe("Calculator Additional Test Case", () => {
     render(<Calculator />);
 
     const venueSlugInput = screen.getByTestId("venueSlug");
-    fireEvent.change(venueSlugInput, { target: { value: "home-assigment-venue-helsinki" } });
+    fireEvent.change(venueSlugInput, {
+      target: { value: "home-assigment-venue-helsinki" },
+    });
 
     const cartValueInput = screen.getByTestId("cartValue");
     fireEvent.change(cartValueInput, { target: { value: "9" } });
@@ -56,21 +58,37 @@ describe("Calculator Additional Test Case", () => {
     fireEvent.change(latitudeInput, { target: { value: "60.17332568937988" } });
 
     const longitudeInput = screen.getByTestId("userLongitude");
-    fireEvent.change(longitudeInput, { target: { value: "24.938220606032882" } });
+    fireEvent.change(longitudeInput, {
+      target: { value: "24.938220606032882" },
+    });
 
     const calculateButton = screen.getByTestId("calculateButton");
     fireEvent.click(calculateButton);
 
-    expect(await screen.findByText(/cart value:/i)).toHaveTextContent("9.00 EUR");
+    expect(await screen.findByText(/cart value:/i)).toHaveTextContent(
+      "9.00 EUR"
+    );
     expect(screen.getByText(/delivery fee:/i)).toHaveTextContent("2.90 EUR");
     expect(screen.getByText(/delivery distance:/i)).toHaveTextContent("659 m");
-    expect(screen.getByText(/small order surcharge:/i)).toHaveTextContent("1.00 EUR");
+    expect(screen.getByText(/small order surcharge:/i)).toHaveTextContent(
+      "1.00 EUR"
+    );
     expect(screen.getByText(/total price:/i)).toHaveTextContent("12.90 EUR");
 
-    expect(screen.getByText(/cart value:/i).getAttribute("data-raw-value")).toBe("900");
-    expect(screen.getByText(/delivery fee:/i).getAttribute("data-raw-value")).toBe("290");
-    expect(screen.getByText(/delivery distance:/i).getAttribute("data-raw-value")).toBe("659");
-    expect(screen.getByText(/small order surcharge:/i).getAttribute("data-raw-value")).toBe("100");
-    expect(screen.getByText(/total price:/i).getAttribute("data-raw-value")).toBe("1290");
+    expect(
+      screen.getByText(/cart value:/i).getAttribute("data-raw-value")
+    ).toBe("900");
+    expect(
+      screen.getByText(/delivery fee:/i).getAttribute("data-raw-value")
+    ).toBe("290");
+    expect(
+      screen.getByText(/delivery distance:/i).getAttribute("data-raw-value")
+    ).toBe("659");
+    expect(
+      screen.getByText(/small order surcharge:/i).getAttribute("data-raw-value")
+    ).toBe("100");
+    expect(
+      screen.getByText(/total price:/i).getAttribute("data-raw-value")
+    ).toBe("1290");
   });
 });

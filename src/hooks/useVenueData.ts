@@ -2,6 +2,7 @@ import { useState } from "react";
 import { fetchVenueStatic, fetchVenueDynamic } from "../utils/api";
 import { VenueData } from "../types";
 
+// Custom hook to fetch venue aka. potential store data
 export const useVenueData = () => {
     const [venueData, setVenueData] = useState<VenueData | null>(null);
     const [error, setError] = useState<string | null>(null);
@@ -28,8 +29,8 @@ export const useVenueData = () => {
         setVenueData(venueData);
         setError(null);
       } catch (err) {
-        console.error("Error fetching venue data:", err);
-        setError("Failed to fetch venue data.");
+        console.error("Error fetching venue data or it doesnt exist", err);
+        setError("Failed to fetch venue data or this venue slug does not exist ;(");
         setVenueData(null);
       }
     };

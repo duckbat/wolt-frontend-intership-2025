@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 interface VenueSlugInputProps {
   venueSlug: string;
@@ -6,13 +6,31 @@ interface VenueSlugInputProps {
   onBlur?: () => void; // onBlur prop to fetch API data when venue slug is entered
 }
 
+// This component is used to render the input field for the venue slug
 const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
   venueSlug,
   setVenueSlug,
   onBlur,
 }) => {
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+
+
+  // This function is used to handle the input change event
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVenueSlug(e.target.value);
+    const value = e.target.value;
+    setVenueSlug(value);
+    setIsEmpty(value.trim() === "");
+  };
+
+  const handleBlur = () => {
+    if (venueSlug.trim() === "") {
+      setIsEmpty(true);
+    } else {
+      setIsEmpty(false);
+    }
+    if (onBlur) {
+      onBlur();
+    }
   };
 
   return (
@@ -25,12 +43,17 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
           id="venueSlug"
           name="venueSlug"
           onChange={handleInputChange}
-          onBlur={onBlur}
-          className="w-full p-2 border border-gray-300 rounded"
-          placeholder="Venue Slug"
+          onBlur={handleBlur}
+          className={`w-full p-2 border ${
+            isEmpty ? "border-red-500" : "border-gray-300"
+          } rounded`}
+          placeholder="home-assignment-venue-helsinki"
           value={venueSlug}
           data-test-id="venueSlug"
         />
+        {isEmpty && (
+          <p className="text-red-500 text-sm mt-1">Please provide a venue slug.</p>
+        )}
       </div>
     </div>
   );

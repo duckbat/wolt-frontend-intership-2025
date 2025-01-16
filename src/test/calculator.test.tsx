@@ -32,7 +32,9 @@ describe("Calculator Initial Test Case", () => {
     render(<Calculator />);
 
     const venueSlugInput = screen.getByTestId("venueSlug");
-    fireEvent.change(venueSlugInput, { target: { value: "home-assigment-venue-helsinki" } });
+    fireEvent.change(venueSlugInput, {
+      target: { value: "home-assigment-venue-helsinki" },
+    });
 
     const cartValueInput = screen.getByTestId("cartValue");
     fireEvent.change(cartValueInput, { target: { value: "10" } });
@@ -46,10 +48,14 @@ describe("Calculator Initial Test Case", () => {
     const calculateButton = screen.getByTestId("calculateButton");
     fireEvent.click(calculateButton);
 
-    expect(await screen.findByText(/cart value:/i)).toHaveTextContent("10.00 EUR");
+    expect(await screen.findByText(/cart value:/i)).toHaveTextContent(
+      "10.00 EUR"
+    );
     expect(screen.getByText(/delivery fee:/i)).toHaveTextContent("1.90 EUR");
     expect(screen.getByText(/delivery distance:/i)).toHaveTextContent("177 m");
-    expect(screen.getByText(/small order surcharge:/i)).toHaveTextContent("0.00 EUR");
+    expect(screen.getByText(/small order surcharge:/i)).toHaveTextContent(
+      "0.00 EUR"
+    );
     expect(screen.getByText(/total price:/i)).toHaveTextContent("11.90 EUR");
   });
 });
