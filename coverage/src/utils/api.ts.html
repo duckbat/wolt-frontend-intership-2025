@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>13/13</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -88,48 +88,48 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import axios from "axios";
 &nbsp;
-const BASE_URL = <span class="cstat-no" title="statement not covered" >"https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues";</span>
+const BASE_URL = "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues";
 &nbsp;
-export const fetchVenueStatic = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async (v</span>enueSlug: string) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const response = <span class="cstat-no" title="statement not covered" >await axios.get(`${BASE_URL}/${venueSlug}/static`);</span>
-<span class="cstat-no" title="statement not covered" >    return response.data;</span>
+export const fetchVenueStatic = async (venueSlug: string) =&gt; {
+  try {
+    const response = await axios.get(`${BASE_URL}/${venueSlug}/static`);
+    return response.data;
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error("Error fetching venue static data:", error);</span>
-<span class="cstat-no" title="statement not covered" >    throw new Error("Failed to fetch venue static data.");</span>
+    console.error("Error fetching venue static data:", error);
+    throw new Error("Failed to fetch venue static data.");
   }
 };
 &nbsp;
-export const fetchVenueDynamic = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >async (v</span>enueSlug: string) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    const response = <span class="cstat-no" title="statement not covered" >await axios.get(`${BASE_URL}/${venueSlug}/dynamic`);</span>
-<span class="cstat-no" title="statement not covered" >    return response.data;</span>
+export const fetchVenueDynamic = async (venueSlug: string) =&gt; {
+  try {
+    const response = await axios.get(`${BASE_URL}/${venueSlug}/dynamic`);
+    return response.data;
   } catch (error) {
-<span class="cstat-no" title="statement not covered" >    console.error("Error fetching venue dynamic data:", error);</span>
-<span class="cstat-no" title="statement not covered" >    throw new Error("Failed to fetch venue dynamic data.");</span>
+    console.error("Error fetching venue dynamic data:", error);
+    throw new Error("Failed to fetch venue dynamic data.");
   }
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -139,7 +139,7 @@ export const fetchVenueDynamic = <span class="cstat-no" title="statement not cov
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-16T09:52:21.573Z
+                at 2025-01-16T18:32:09.002Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

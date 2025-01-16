@@ -1,13 +1,13 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, beforeEach, expect, vi, Mock } from "vitest";
-import Calculator from "../components/Calculator";
-import { useVenueData } from "../hooks/useVenueData";
+import Calculator from "../../components/Calculator";
+import { useVenueData } from "../../hooks/useVenueData";
 
-vi.mock("../hooks/useVenueData", () => ({
+vi.mock("../../hooks/useVenueData", () => ({
   useVenueData: vi.fn(),
 }));
 
-vi.mock("../utils/calculation", () => ({
+vi.mock("../../utils/calculation", () => ({
   calculateDistance: vi.fn(() => 177),
   calculateDeliveryFee: vi.fn(() => 190),
 }));

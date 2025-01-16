@@ -23,20 +23,23 @@ const GetLocationButton: React.FC<GetLocationButtonProps> = ({
         onLocationFound(latitude, longitude);
       },
       (error) => {
+        // Use numeric codes directly:
+        // 1 = PERMISSION_DENIED
+        // 2 = POSITION_UNAVAILABLE
+        // 3 = TIMEOUT
         let errorMessage = "Unable to get your location.";
         switch (error.code) {
-          case error.PERMISSION_DENIED:
+          case 1:
             errorMessage = "Permission denied. Please enable location access.";
             break;
-          case error.POSITION_UNAVAILABLE:
+          case 2:
             errorMessage = "Location information is unavailable.";
             break;
-          case error.TIMEOUT:
+          case 3:
             errorMessage = "The request to get location timed out.";
             break;
           default:
             errorMessage = "An unknown error occurred.";
-            break;
         }
         onError?.(errorMessage);
       },

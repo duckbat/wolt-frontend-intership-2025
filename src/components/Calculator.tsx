@@ -98,7 +98,7 @@ const Calculator: React.FC = () => {
   const isFormValid = venueSlug && latitude && longitude && cartValue;
 
   return (
-    <div className="p-4 space-y-4 bg-gray-800 rounded-lg">
+    <div className="p-4 space-y-4 bg-gray-800 rounded-lg" data-test-id="calculator">
       <form onSubmit={handleSubmit} className="p-4 space-y-4">
         <VenueSlugInput venueSlug={venueSlug} setVenueSlug={setVenueSlug} onBlur={handleVenueSlugBlur}  />
         <CartValueInput cartValue={cartValue} setCartValue={setCartValue} />

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>10/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>11/11</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -127,37 +127,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -178,37 +178,37 @@ interface UseCurrentLocationReturn {
 }
 &nbsp;
 // Custom hook to get the current location of the user
-export const useCurrentLocation = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(): UseCurrentLocationReturn =&gt; {</span></span>
+export const useCurrentLocation = (): UseCurrentLocationReturn =&gt; {
   const {
     coords,
     isGeolocationAvailable,
     isGeolocationEnabled,
     getPosition,
     positionError,
-  } = <span class="cstat-no" title="statement not covered" >useGeolocated({</span>
+  } = useGeolocated({
     positionOptions: {
       enableHighAccuracy: true,
     },
     userDecisionTimeout: 10000, // 10 seconds
   });
 &nbsp;
-  const error = <span class="cstat-no" title="statement not covered" >React.useMemo(<span class="fstat-no" title="function not covered" >() =&gt; {</span></span>
-<span class="cstat-no" title="statement not covered" >    if (positionError) {</span>
-<span class="cstat-no" title="statement not covered" >      switch (positionError.code) {</span>
+  const error = React.useMemo(() =&gt; {
+    if (positionError) {
+      switch (positionError.code) {
         case positionError.PERMISSION_DENIED:
-<span class="cstat-no" title="statement not covered" >          return "Permission denied. Please enable location access.";</span>
+          return "Permission denied. Please enable location access.";
         case positionError.POSITION_UNAVAILABLE:
-<span class="cstat-no" title="statement not covered" >          return "Location information is unavailable.";</span>
+          return "Location information is unavailable.";
         case positionError.TIMEOUT:
-<span class="cstat-no" title="statement not covered" >          return "The request to get location timed out.";</span>
+          return "The request to get location timed out.";
         default:
-<span class="cstat-no" title="statement not covered" >          return "An unknown error occurred.";</span>
+          return "An unknown error occurred.";
       }
     }
-<span class="cstat-no" title="statement not covered" >    return null;</span>
+    return null;
   }, [positionError]);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return {</span>
+  return {
     latitude: coords?.latitude || null,
     longitude: coords?.longitude || null,
     isGeolocationAvailable,
@@ -223,7 +223,7 @@ export const useCurrentLocation = <span class="cstat-no" title="statement not co
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-16T09:52:21.573Z
+                at 2025-01-16T18:32:09.002Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
