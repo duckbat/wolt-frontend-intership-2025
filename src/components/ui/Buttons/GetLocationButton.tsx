@@ -48,14 +48,16 @@ const GetLocationButton: React.FC<GetLocationButtonProps> = ({
   };
 
   return (
+    <div className="text-center p-4 pb-0 w-full">
     <button
       type="button"
       onClick={handleGetLocation}
-      className="p-2 bg-blue-500 text-white rounded disabled:opacity-50"
+      className="p-2 w-full text-white disabled:opacity-50"
       data-test-id="getLocation"
     >
       Get Location
     </button>
+    </div>
   );
 };
 

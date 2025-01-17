@@ -45,27 +45,27 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
             placeholder=" " // For floated label
             value={venueSlug}
             data-test-id="venueSlug"
-            className={`peer block w-full rounded-xl border-2 p-3 text-sm 
-              ${error ? "border-red-500" : "border-gray-300"} 
+            className={`peer block w-full rounded-xl border-2 p-3 pt-4 pb-1 text-sm 
+              ${error ? "border-gray-300" : "border-gray-300"} 
               focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
               focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
               transition-all`}
           />
           <label
             htmlFor="venueSlug"
-            className={`absolute left-3 transition-all text-gray-500 text-sm 
+            className={`absolute left-4 transition-all text-gray-400 text-sm 
               ${
                 venueSlug
-                  ? "top-0 text-xs"
+                  ? "top-1 text-xs"
                   : "top-3 peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm"
               } 
-              peer-focus:top-0 peer-focus:text-xs`}
+              peer-focus:top-1 peer-focus:text-xs`}
           >
-            Venue Slug
+            home-assignment-venue-helsinki
           </label>
         </div>
         <div
-          className="mt-2 text-sm transition-all duration-300 ease-in-out"
+          className="text-sm transition-all duration-300 ease-in-out"
           style={{
             minHeight: "20px", // Reserve space for the error message
             color: error ? "red" : "transparent", // Show error message in red, or hide it

@@ -26,7 +26,6 @@ const Calculator: React.FC = () => {
     }
   };
 
-  // Function to handle location found
   const handleLocationFound = (lat: number, lon: number) => {
     setLatitude(lat.toString());
     setLongitude(lon.toString());
@@ -48,7 +47,6 @@ const Calculator: React.FC = () => {
     }
 
     try {
-      // Fetch venue data first
       await fetchVenueData(venueSlug);
 
       if (!venueData) {
@@ -56,7 +54,6 @@ const Calculator: React.FC = () => {
         return;
       }
 
-      // Perform calculations after fetching venue data
       const deliveryDistance = calculateDistance(
         latNumber,
         lonNumber,
@@ -98,8 +95,8 @@ const Calculator: React.FC = () => {
   const isFormValid = venueSlug && latitude && longitude && cartValue;
 
   return (
-    <div data-test-id="calculator" className="text-left border">
-      <form onSubmit={handleSubmit} className="p-4 space-y-4">
+    <div data-test-id="calculator" className="text-left">
+      <form onSubmit={handleSubmit} className="p-4">
         <VenueSlugInput
           venueSlug={venueSlug}
           setVenueSlug={setVenueSlug}
@@ -112,16 +109,13 @@ const Calculator: React.FC = () => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
         />
-        <div className="flex flex-col space-y-2 items-center">
-        {/* Pass handleLocationFound to GetLocationButton */}
-        <GetLocationButton onLocationFound={handleLocationFound} />
-          {error && <p className="text-red-500">{error}</p>}
-          {venueError && <p className="text-red-500">{venueError}</p>}
-        <CalculateButton
-          onClick={handleSubmit}
-          disabled={!isFormValid}
-          data-test-id="calculateButton"
-        />
+        <div className="flex flex-col space-y-4 items-center pt-5">
+          <GetLocationButton onLocationFound={handleLocationFound} />
+          <CalculateButton
+            onClick={handleSubmit}
+            disabled={!isFormValid}
+            error={error || venueError} // Pass error to the button
+          />
         </div>
       </form>
 

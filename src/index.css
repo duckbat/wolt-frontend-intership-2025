@@ -41,18 +41,18 @@ input {
 /* Consistent button styling */
 button {
   padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
-  background-color: #007bff;
+  background-color: #009DE0;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #008AC5;
 }
 
 /* Body styling for centering */
@@ -61,7 +61,7 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
-  min-height: 80vh;
+  min-height: 100vh;
 }
 
 /* Heading styles */

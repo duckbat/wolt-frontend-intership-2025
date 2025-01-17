@@ -1,12 +1,12 @@
 import Calculator from "./components/Calculator";
+import Title from "./components/ui/Title";
 
 
 function App() {
 
   return (
     <>
-      <h1 className="font-bold">Wolt Calculator</h1>
-      <h2 className="text-xl text-right font-bold">Some text later</h2>
+      <Title />
       <Calculator />
     </>
   );

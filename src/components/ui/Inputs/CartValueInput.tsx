@@ -6,28 +6,29 @@ interface CartValueInputProps {
   onBlur?: () => void;
 }
 
-// This component is used to render the input field for the cart value
 const CartValueInput: React.FC<CartValueInputProps> = ({
   cartValue,
   setCartValue,
   onBlur,
 }) => {
-  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
-  // This function is used to handle the input change event
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^\d*\.?\d{0,2}$/.test(value)) {
       setCartValue(value);
+
+      // Reset error when user starts typing
+      if (error) {
+        setError("");
+      }
     }
   };
+
   const handleBlur = () => {
-    if (cartValue.trim() === "") {
-      setIsEmpty(true);
-    } else {
-      setIsEmpty(false);
-    }
-    if (onBlur) {
+    if (!cartValue.trim()) {
+      setError("Cart value is required.");
+    } else if (onBlur) {
       onBlur();
     }
   };
@@ -44,12 +45,21 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
           placeholder="420.69"
           value={cartValue}
           data-test-id="cartValue"
+          className={`block w-full rounded-xl border-2 p-3 text-sm 
+            ${error ? "border-gray-300" : "border-gray-300"} 
+            focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
+            focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
+            transition-all`}
         />
-        {isEmpty && (
-          <p className="text-red-500 text-sm mt-1">
-            Aren't you purchasing anything ( ͡° ͜ʖ ͡° ) ?
-          </p>
-        )}
+        <div
+          className="text-sm transition-all duration-300 ease-in-out"
+          style={{
+            minHeight: "20px", // Reserve space for the error message
+            color: error ? "red" : "transparent", // Show error message in red, or hide it
+          }}
+        >
+          {error || " "} {/* Empty string to avoid collapsing */}
+        </div>
       </div>
     </div>
   );
