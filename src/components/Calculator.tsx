@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useVenueData } from "../hooks/useVenueData";
 import { calculateDistance, calculateDeliveryFee } from "../utils/calculation";
 import GetLocationButton from "./ui/Buttons/GetLocationButton";
@@ -19,12 +19,7 @@ const Calculator: React.FC = () => {
 
   const { venueData, error: venueError, fetchVenueData } = useVenueData();
 
-  const handleVenueSlugBlur = async () => {
-    if (venueSlug) {
-      console.log("Fetching venue data for slug:", venueSlug);
-      await fetchVenueData(venueSlug);
-    }
-  };
+  const breakdownRef = useRef<HTMLDivElement | null>(null);
 
   const handleLocationFound = (lat: number, lon: number) => {
     setLatitude(lat.toString());
@@ -92,15 +87,22 @@ const Calculator: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (result && breakdownRef.current) {
+      breakdownRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [result]);
+
   const isFormValid = venueSlug && latitude && longitude && cartValue;
 
   return (
     <div data-test-id="calculator" className="text-left">
-      <form onSubmit={handleSubmit} className="p-4">
+      <form onSubmit={handleSubmit}>
         <VenueSlugInput
           venueSlug={venueSlug}
           setVenueSlug={setVenueSlug}
-          onBlur={handleVenueSlugBlur}
+          onFetch={fetchVenueData}
+          error={venueError}
         />
         <CartValueInput cartValue={cartValue} setCartValue={setCartValue} />
         <GetLocationInput
@@ -109,17 +111,19 @@ const Calculator: React.FC = () => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
         />
-        <div className="flex flex-col space-y-4 items-center pt-5">
+        <div className="flex flex-col space-y-4 items-center">
           <GetLocationButton onLocationFound={handleLocationFound} />
           <CalculateButton
             onClick={handleSubmit}
             disabled={!isFormValid}
-            error={error || venueError} // Pass error to the button
+            error={error}
           />
         </div>
       </form>
 
-      {result && <PriceBreakdown result={result} />}
+      <div ref={breakdownRef} className="mt-6">
+        {result && <PriceBreakdown result={result} />}
+      </div>
     </div>
   );
 };

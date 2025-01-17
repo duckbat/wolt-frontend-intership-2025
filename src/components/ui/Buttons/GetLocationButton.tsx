@@ -5,7 +5,6 @@ interface GetLocationButtonProps {
   onError?: (error: string) => void;
 }
 
-// Button to get user's location
 const GetLocationButton: React.FC<GetLocationButtonProps> = ({
   onLocationFound,
   onError,
@@ -23,10 +22,6 @@ const GetLocationButton: React.FC<GetLocationButtonProps> = ({
         onLocationFound(latitude, longitude);
       },
       (error) => {
-        // Use numeric codes directly:
-        // 1 = PERMISSION_DENIED
-        // 2 = POSITION_UNAVAILABLE
-        // 3 = TIMEOUT
         let errorMessage = "Unable to get your location.";
         switch (error.code) {
           case 1:
@@ -48,15 +43,15 @@ const GetLocationButton: React.FC<GetLocationButtonProps> = ({
   };
 
   return (
-    <div className="text-center p-4 pb-0 w-full">
-    <button
-      type="button"
-      onClick={handleGetLocation}
-      className="p-2 w-full text-white disabled:opacity-50"
-      data-test-id="getLocation"
-    >
-      Get Location
-    </button>
+    <div className="text-center px-4 pb-0 w-full">
+      <button
+        type="button"
+        onClick={handleGetLocation}
+        className="p-2 w-full text-white disabled:opacity-50"
+        data-test-id="getLocation"
+      >
+        Get Location
+      </button>
     </div>
   );
 };

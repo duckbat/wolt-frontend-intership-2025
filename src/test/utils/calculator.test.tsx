@@ -1,25 +1,49 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, beforeEach, expect, vi, Mock } from "vitest";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { describe, it, beforeEach, vi, Mock } from "vitest";
 import Calculator from "../../components/Calculator";
 import { useVenueData } from "../../hooks/useVenueData";
 
+// Mock hooks and utility functions
 vi.mock("../../hooks/useVenueData", () => ({
   useVenueData: vi.fn(),
 }));
 
 vi.mock("../../utils/calculation", () => ({
-  calculateDistance: vi.fn(() => 177),
-  calculateDeliveryFee: vi.fn(() => 190),
+  calculateDistance: vi.fn((lat1, lon1, lat2, lon2) => {
+    if (lat1 === 60.17094 && lon1 === 24.93087 && lat2 === 60.17094 && lon2 === 24.93087) {
+      return 177;
+    }
+    if (lat1 === 60.17332568937988 && lon1 === 24.938220606032882 && lat2 === 60.17094 && lon2 === 24.93087) {
+      return 659;
+    }
+    return 0;
+  }),
+  calculateDeliveryFee: vi.fn((distance) => {
+    if (distance === 177) {
+      return 190;
+    }
+    if (distance === 659) {
+      return 290;
+    }
+    throw new Error("Invalid distance");
+  }),
 }));
 
-describe("Calculator Initial Test Case", () => {
+// Mock scrollIntoView
+Element.prototype.scrollIntoView = vi.fn();
+
+describe("Calculator Tests", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
     (useVenueData as Mock).mockReturnValue({
       venueData: {
         location: [24.93087, 60.17094],
-        distanceRanges: [100, 200, 300, 700],
+        distanceRanges: [
+          { min: 0, max: 200, a: 50, b: 10 },
+          { min: 200, max: 500, a: 100, b: 15 },
+          { min: 500, max: 1000, a: 150, b: 20 },
+        ],
         basePrice: 100,
         orderMinimumNoSurcharge: 1000,
       },
@@ -31,31 +55,35 @@ describe("Calculator Initial Test Case", () => {
   it("should complete the user flow and display the correct price breakdown", async () => {
     render(<Calculator />);
 
-    const venueSlugInput = screen.getByTestId("venueSlug");
-    fireEvent.change(venueSlugInput, {
-      target: { value: "home-assigment-venue-helsinki" },
+    // Input venue slug
+    fireEvent.change(screen.getByTestId("venueSlug"), {
+      target: { value: "home-assignment-venue-helsinki" },
     });
 
-    const cartValueInput = screen.getByTestId("cartValue");
-    fireEvent.change(cartValueInput, { target: { value: "10" } });
+    // Input cart value
+    fireEvent.change(screen.getByTestId("cartValue"), {
+      target: { value: "10" },
+    });
 
-    const latitudeInput = screen.getByTestId("userLatitude");
-    fireEvent.change(latitudeInput, { target: { value: "60.17094" } });
+    // Input latitude and longitude
+    fireEvent.change(screen.getByTestId("userLatitude"), {
+      target: { value: "60.17094" },
+    });
+    fireEvent.change(screen.getByTestId("userLongitude"), {
+      target: { value: "24.93087" },
+    });
 
-    const longitudeInput = screen.getByTestId("userLongitude");
-    fireEvent.change(longitudeInput, { target: { value: "24.93087" } });
+    // Click calculate button
+    fireEvent.click(screen.getByTestId("calculateButton"));
 
-    const calculateButton = screen.getByTestId("calculateButton");
-    fireEvent.click(calculateButton);
+    // Wait for PriceBreakdown to render
+    await waitFor(() => expect(screen.queryByText(/Total Price:/i)).toBeInTheDocument());
 
-    expect(await screen.findByText(/cart value:/i)).toHaveTextContent(
-      "10.00 EUR"
-    );
-    expect(screen.getByText(/delivery fee:/i)).toHaveTextContent("1.90 EUR");
-    expect(screen.getByText(/delivery distance:/i)).toHaveTextContent("177 m");
-    expect(screen.getByText(/small order surcharge:/i)).toHaveTextContent(
-      "0.00 EUR"
-    );
-    expect(screen.getByText(/total price:/i)).toHaveTextContent("11.90 EUR");
+    // Assert the price breakdown
+    expect(screen.getByText(/Cart Value:/i)).toHaveTextContent("10.00 EUR");
+    expect(screen.getByText(/Delivery Fee:/i)).toHaveTextContent("1.90 EUR");
+    expect(screen.getByText(/Delivery Distance:/i)).toHaveTextContent("177 meters");
+    expect(screen.getByText(/Small Order Surcharge:/i)).toHaveTextContent("0.00 EUR");
+    expect(screen.getByText(/Total Price:/i)).toHaveTextContent(" 11.90 EUR");
   });
 });

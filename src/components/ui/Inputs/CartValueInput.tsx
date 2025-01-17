@@ -18,7 +18,6 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
     if (/^\d*\.?\d{0,2}$/.test(value)) {
       setCartValue(value);
 
-      // Reset error when user starts typing
       if (error) {
         setError("");
       }
@@ -34,31 +33,36 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="px-4">
       <div className="input-with-placeholder">
-        <label htmlFor="cartValue">Cart Value</label>
-        <input
-          id="cartValue"
-          name="cartValue"
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-          placeholder="420.69"
-          value={cartValue}
-          data-test-id="cartValue"
-          className={`block w-full rounded-xl border-2 p-3 text-sm 
-            ${error ? "border-gray-300" : "border-gray-300"} 
-            focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
-            focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
-            transition-all`}
-        />
+        <label htmlFor="cartValue" className="block mb-1">
+          Cart Value
+        </label>
+        <div className="relative w-full">
+          <input
+            id="cartValue"
+            name="cartValue"
+            type="number"
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            placeholder="16.12"
+            value={cartValue}
+            data-test-id="cartValue"
+            className={`peer block w-full rounded-xl border-2 p-3 text-sm 
+              border-gray-300 
+              focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
+              focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
+              transition-[color,box-shadow]`}
+          />
+        </div>
         <div
-          className="text-sm transition-all duration-300 ease-in-out"
+          className="text-sm transition-all duration-300 ease-in-out pl-4"
           style={{
-            minHeight: "20px", // Reserve space for the error message
-            color: error ? "red" : "transparent", // Show error message in red, or hide it
+            minHeight: "20px",
+            color: error ? "red" : "transparent",
           }}
         >
-          {error || " "} {/* Empty string to avoid collapsing */}
+          {error || " "}
         </div>
       </div>
     </div>

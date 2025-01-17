@@ -89,7 +89,7 @@ describe("useVenueData", () => {
     await waitFor(() => {
       expect(result.current.venueData).toBeNull();
       expect(result.current.error).toBe(
-        "Failed to fetch venue data or this venue slug does not exist ;("
+        "Failed to fetch venue data."
       );
     });
   });

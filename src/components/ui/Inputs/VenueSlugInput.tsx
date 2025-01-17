@@ -1,55 +1,72 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface VenueSlugInputProps {
   venueSlug: string;
   setVenueSlug: (value: string) => void;
-  onBlur?: () => void; // onBlur prop to fetch API data when venue slug is entered
+  onFetch: (value: string) => Promise<boolean>; // Updated signature
+  error?: string | null;
 }
 
 const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
   venueSlug,
   setVenueSlug,
-  onBlur,
+  onFetch,
+  error,
 }) => {
-  const [error, setError] = useState<string>("");
+  const [localError, setLocalError] = useState<string>("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setVenueSlug(value);
 
-    // Reset error when user starts typing
-    if (error) {
-      setError("");
+    // Reset local error when typing
+    if (localError) setLocalError("");
+  };
+
+  const handleBlur = async () => {
+    if (!venueSlug.trim()) {
+      setLocalError("Venue slug is required.");
+      return;
+    }
+
+    const success = await onFetch(venueSlug.trim());
+    if (!success) {
+      setLocalError("Failed to fetch venue data.");
     }
   };
 
-  const handleBlur = () => {
-    // Set error if venueSlug is empty
-    if (!venueSlug.trim()) {
-      setError("Venue slug is required.");
-    } else if (onBlur) {
-      onBlur();
-    }
-  };
+  // Debounced fetch when typing
+  useEffect(() => {
+    if (!venueSlug.trim()) return;
+
+    const debounceFetch = setTimeout(async () => {
+      const success = await onFetch(venueSlug.trim());
+      if (!success) {
+        setLocalError("Failed to fetch venue data.");
+      }
+    }, 500);
+
+    return () => clearTimeout(debounceFetch);
+  }, [venueSlug, onFetch]);
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="px-4 pb-1 pt-6">
       <div className="input-with-placeholder">
         <label htmlFor="venueSlug">Venue Slug</label>
         <div className="relative w-full">
           <input
             id="venueSlug"
             name="venueSlug"
+            value={venueSlug}
             onChange={handleInputChange}
             onBlur={handleBlur}
-            placeholder=" " // For floated label
-            value={venueSlug}
             data-test-id="venueSlug"
+            placeholder=" "
             className={`peer block w-full rounded-xl border-2 p-3 pt-4 pb-1 text-sm 
-              ${error ? "border-gray-300" : "border-gray-300"} 
+              border-gray-300 
               focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
               focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
-              transition-all`}
+              transition-[color,box-shadow]`}
           />
           <label
             htmlFor="venueSlug"
@@ -65,13 +82,13 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
           </label>
         </div>
         <div
-          className="text-sm transition-all duration-300 ease-in-out"
+          className="text-sm transition-all duration-300 ease-in-out pl-4"
           style={{
-            minHeight: "20px", // Reserve space for the error message
-            color: error ? "red" : "transparent", // Show error message in red, or hide it
+            minHeight: "20px",
+            color: localError || error ? "red" : "transparent",
           }}
         >
-          {error || " "} {/* Empty string to avoid collapsing */}
+          {localError || error || " "}
         </div>
       </div>
     </div>

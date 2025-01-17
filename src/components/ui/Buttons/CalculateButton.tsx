@@ -3,12 +3,16 @@ import React from "react";
 interface CalculateButtonProps {
   onClick: (e: React.FormEvent) => void;
   disabled?: boolean;
-  error?: string | null; // Optional error message
+  error?: string | null;
 }
 
-const CalculateButton: React.FC<CalculateButtonProps> = ({ onClick, disabled, error }) => {
+const CalculateButton: React.FC<CalculateButtonProps> = ({
+  onClick,
+  disabled,
+  error,
+}) => {
   return (
-    <div className="text-center p-4 w-full">
+    <div className="text-center px-4 pt-6 w-full">
       <button
         type="submit"
         onClick={onClick}
@@ -23,8 +27,8 @@ const CalculateButton: React.FC<CalculateButtonProps> = ({ onClick, disabled, er
       <div
         className="mt-2 text-sm transition-all duration-100 ease-in-out"
         style={{
-          minHeight: "20px", // Reserve space for the error message
-          color: error ? "red" : "transparent", // Show error in red or hide
+          minHeight: "20px",
+          color: error ? "red" : "transparent",
         }}
       >
         {error || " "} {/* Prevent collapsing */}
