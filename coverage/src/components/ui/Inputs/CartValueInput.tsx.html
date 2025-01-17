@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.33% </span>
+                <span class="strong">61.53% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/12</span>
+                <span class='fraction'>8/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">41.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/9</span>
+                <span class='fraction'>5/12</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">58.33% </span>
+                <span class="strong">61.53% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/12</span>
+                <span class='fraction'>8/13</span>
             </div>
         
             
@@ -124,7 +124,18 @@
 <a name='L59'></a><a href='#L59'>59</a>
 <a name='L60'></a><a href='#L60'>60</a>
 <a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -132,29 +143,40 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">14x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,53 +215,64 @@ interface CartValueInputProps {
   onBlur?: () =&gt; void;
 }
 &nbsp;
-// This component is used to render the input field for the cart value
 const CartValueInput: React.FC&lt;CartValueInputProps&gt; = ({
   cartValue,
   setCartValue,
   onBlur,
 }) =&gt; {
-  const [isEmpty, setIsEmpty] = useState&lt;boolean&gt;(false);
+  const [error, setError] = useState&lt;string&gt;("");
 &nbsp;
-  // This function is used to handle the input change event
   const handleInputChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;) =&gt; {
     const value = e.target.value;
     <span class="missing-if-branch" title="else path not taken" >E</span>if (/^\d*\.?\d{0,2}$/.test(value)) {
       setCartValue(value);
+&nbsp;
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (error) {
+<span class="cstat-no" title="statement not covered" >        setError("");</span>
+      }
     }
   };
+&nbsp;
   const handleBlur = <span class="fstat-no" title="function not covered" >() =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    if (cartValue.trim() === "") {</span>
-<span class="cstat-no" title="statement not covered" >      setIsEmpty(true);</span>
-    } else {
-<span class="cstat-no" title="statement not covered" >      setIsEmpty(false);</span>
-    }
-<span class="cstat-no" title="statement not covered" >    if (onBlur) {</span>
+<span class="cstat-no" title="statement not covered" >    if (!cartValue.trim()) {</span>
+<span class="cstat-no" title="statement not covered" >      setError("Cart value is required.");</span>
+    } else <span class="cstat-no" title="statement not covered" >if (onBlur) {</span>
 <span class="cstat-no" title="statement not covered" >      onBlur();</span>
     }
   };
 &nbsp;
   return (
-    &lt;div className="p-4 space-y-4"&gt;
+    &lt;div className="px-4"&gt;
       &lt;div className="input-with-placeholder"&gt;
-        &lt;label htmlFor="cartValue"&gt;Cart Value (EUR)&lt;/label&gt;
-        &lt;input
-          id="cartValue"
-          name="cartValue"
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-          className={`w-full p-2 border ${
-            isEmpty ? <span class="branch-0 cbranch-no" title="branch not covered" >"border-red-500" : "</span>border-gray-300"
-          } rounded`}
-          placeholder="420.69"
-          value={cartValue}
-          data-test-id="cartValue"
-        /&gt;
-        {isEmpty &amp;&amp; (
-          &lt;p className="text-red-500 text-sm mt-1"&gt;
-            Aren't you purchasing anything ( ͡° ͜ʖ ͡° ) ?
-          &lt;/p&gt;
-        )}
+        &lt;label htmlFor="cartValue" className="block mb-1"&gt;
+          Cart Value
+        &lt;/label&gt;
+        &lt;div className="relative w-full"&gt;
+          &lt;input
+            id="cartValue"
+            name="cartValue"
+            type="number"
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            placeholder="16.12"
+            value={cartValue}
+            data-test-id="cartValue"
+            className={`peer block w-full rounded-xl border-2 p-3 text-sm 
+              border-gray-300 
+              focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
+              focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
+              transition-[color,box-shadow]`}
+          /&gt;
+        &lt;/div&gt;
+        &lt;div
+          className="text-sm transition-all duration-300 ease-in-out pl-4"
+          style={{
+            minHeight: "20px",
+            color: error ? <span class="branch-0 cbranch-no" title="branch not covered" >"red" : "</span>transparent",
+          }}
+        &gt;
+          {error || " "}
+        &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   );
@@ -253,7 +286,7 @@ export default CartValueInput;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-16T18:32:09.002Z
+                at 2025-01-17T22:09:20.424Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

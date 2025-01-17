@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useVenueData } from "../hooks/useVenueData";
 import { calculateDistance, calculateDeliveryFee } from "../utils/calculation";
 import GetLocationButton from "./ui/Buttons/GetLocationButton";
@@ -19,14 +19,8 @@ const Calculator: React.FC = () => {
 
   const { venueData, error: venueError, fetchVenueData } = useVenueData();
 
-  const handleVenueSlugBlur = async () => {
-    if (venueSlug) {
-      console.log("Fetching venue data for slug:", venueSlug);
-      await fetchVenueData(venueSlug);
-    }
-  };
+  const breakdownRef = useRef<HTMLDivElement | null>(null);
 
-  // Function to handle location found
   const handleLocationFound = (lat: number, lon: number) => {
     setLatitude(lat.toString());
     setLongitude(lon.toString());
@@ -48,7 +42,6 @@ const Calculator: React.FC = () => {
     }
 
     try {
-      // Fetch venue data first
       await fetchVenueData(venueSlug);
 
       if (!venueData) {
@@ -56,7 +49,6 @@ const Calculator: React.FC = () => {
         return;
       }
 
-      // Perform calculations after fetching venue data
       const deliveryDistance = calculateDistance(
         latNumber,
         lonNumber,
@@ -95,12 +87,23 @@ const Calculator: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (result && breakdownRef.current) {
+      breakdownRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [result]);
+
   const isFormValid = venueSlug && latitude && longitude && cartValue;
 
   return (
-    <div className="p-4 space-y-4 bg-gray-800 rounded-lg" data-test-id="calculator">
-      <form onSubmit={handleSubmit} className="p-4 space-y-4">
-        <VenueSlugInput venueSlug={venueSlug} setVenueSlug={setVenueSlug} onBlur={handleVenueSlugBlur}  />
+    <div data-test-id="calculator" className="text-left">
+      <form onSubmit={handleSubmit}>
+        <VenueSlugInput
+          venueSlug={venueSlug}
+          setVenueSlug={setVenueSlug}
+          onFetch={fetchVenueData}
+          error={venueError}
+        />
         <CartValueInput cartValue={cartValue} setCartValue={setCartValue} />
         <GetLocationInput
           latitude={latitude}
@@ -108,18 +111,19 @@ const Calculator: React.FC = () => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
         />
-        {/* Pass handleLocationFound to GetLocationButton */}
-        <GetLocationButton onLocationFound={handleLocationFound} />
-        {error && <p className="text-red-500">{error}</p>}
-        {venueError && <p className="text-red-500">{venueError}</p>}
-        <CalculateButton
-          onClick={handleSubmit}
-          disabled={!isFormValid}
-          data-test-id="calculateButton"
-        />
+        <div className="flex flex-col space-y-4 items-center">
+          <GetLocationButton onLocationFound={handleLocationFound} />
+          <CalculateButton
+            onClick={handleSubmit}
+            disabled={!isFormValid}
+            error={error}
+          />
+        </div>
       </form>
 
-      {result && <PriceBreakdown result={result} />}
+      <div ref={breakdownRef} className="mt-6">
+        {result && <PriceBreakdown result={result} />}
+      </div>
     </div>
   );
 };

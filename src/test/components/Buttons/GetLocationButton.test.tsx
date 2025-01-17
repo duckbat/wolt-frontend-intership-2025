@@ -1,7 +1,7 @@
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render, fireEvent, screen } from "@testing-library/react";
-import GetLocationButton from "../components/ui/Buttons/GetLocationButton"; 
+import GetLocationButton from "../../../components/ui/Buttons/GetLocationButton"; 
 // Adjust the import path based on your folder structure
 
 describe("GetLocationButton", () => {

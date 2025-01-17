@@ -6,53 +6,64 @@ interface CartValueInputProps {
   onBlur?: () => void;
 }
 
-// This component is used to render the input field for the cart value
 const CartValueInput: React.FC<CartValueInputProps> = ({
   cartValue,
   setCartValue,
   onBlur,
 }) => {
-  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
 
-  // This function is used to handle the input change event
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^\d*\.?\d{0,2}$/.test(value)) {
       setCartValue(value);
+
+      if (error) {
+        setError("");
+      }
     }
   };
+
   const handleBlur = () => {
-    if (cartValue.trim() === "") {
-      setIsEmpty(true);
-    } else {
-      setIsEmpty(false);
-    }
-    if (onBlur) {
+    if (!cartValue.trim()) {
+      setError("Cart value is required.");
+    } else if (onBlur) {
       onBlur();
     }
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="px-4">
       <div className="input-with-placeholder">
-        <label htmlFor="cartValue">Cart Value (EUR)</label>
-        <input
-          id="cartValue"
-          name="cartValue"
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-          className={`w-full p-2 border ${
-            isEmpty ? "border-red-500" : "border-gray-300"
-          } rounded`}
-          placeholder="420.69"
-          value={cartValue}
-          data-test-id="cartValue"
-        />
-        {isEmpty && (
-          <p className="text-red-500 text-sm mt-1">
-            Aren't you purchasing anything ( ͡° ͜ʖ ͡° ) ?
-          </p>
-        )}
+        <label htmlFor="cartValue" className="block mb-1">
+          Cart Value
+        </label>
+        <div className="relative w-full">
+          <input
+            id="cartValue"
+            name="cartValue"
+            type="number"
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            placeholder="16.12"
+            value={cartValue}
+            data-test-id="cartValue"
+            className={`peer block w-full rounded-xl border-2 p-3 text-sm 
+              border-gray-300 
+              focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
+              focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
+              transition-[color,box-shadow]`}
+          />
+        </div>
+        <div
+          className="text-sm transition-all duration-300 ease-in-out pl-4"
+          style={{
+            minHeight: "20px",
+            color: error ? "red" : "transparent",
+          }}
+        >
+          {error || " "}
+        </div>
       </div>
     </div>
   );

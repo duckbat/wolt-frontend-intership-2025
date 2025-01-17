@@ -1,59 +1,95 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface VenueSlugInputProps {
   venueSlug: string;
   setVenueSlug: (value: string) => void;
-  onBlur?: () => void; // onBlur prop to fetch API data when venue slug is entered
+  onFetch: (value: string) => Promise<boolean>; // Updated signature
+  error?: string | null;
 }
 
-// This component is used to render the input field for the venue slug
 const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
   venueSlug,
   setVenueSlug,
-  onBlur,
+  onFetch,
+  error,
 }) => {
-  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+  const [localError, setLocalError] = useState<string>("");
 
-
-  // This function is used to handle the input change event
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setVenueSlug(value);
-    setIsEmpty(value.trim() === "");
+
+    // Reset local error when typing
+    if (localError) setLocalError("");
   };
 
-  const handleBlur = () => {
-    if (venueSlug.trim() === "") {
-      setIsEmpty(true);
-    } else {
-      setIsEmpty(false);
+  const handleBlur = async () => {
+    if (!venueSlug.trim()) {
+      setLocalError("Venue slug is required.");
+      return;
     }
-    if (onBlur) {
-      onBlur();
+
+    const success = await onFetch(venueSlug.trim());
+    if (!success) {
+      setLocalError("Failed to fetch venue data.");
     }
   };
+
+  // Debounced fetch when typing
+  useEffect(() => {
+    if (!venueSlug.trim()) return;
+
+    const debounceFetch = setTimeout(async () => {
+      const success = await onFetch(venueSlug.trim());
+      if (!success) {
+        setLocalError("Failed to fetch venue data.");
+      }
+    }, 500);
+
+    return () => clearTimeout(debounceFetch);
+  }, [venueSlug, onFetch]);
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="px-4 pb-1 pt-6">
       <div className="input-with-placeholder">
-        <label htmlFor="venueSlug" className="block text-sm font-medium">
-          Venue Slug
-        </label>
-        <input
-          id="venueSlug"
-          name="venueSlug"
-          onChange={handleInputChange}
-          onBlur={handleBlur}
-          className={`w-full p-2 border ${
-            isEmpty ? "border-red-500" : "border-gray-300"
-          } rounded`}
-          placeholder="home-assignment-venue-helsinki"
-          value={venueSlug}
-          data-test-id="venueSlug"
-        />
-        {isEmpty && (
-          <p className="text-red-500 text-sm mt-1">Please provide a venue slug.</p>
-        )}
+        <label htmlFor="venueSlug">Venue Slug</label>
+        <div className="relative w-full">
+          <input
+            id="venueSlug"
+            name="venueSlug"
+            value={venueSlug}
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            data-test-id="venueSlug"
+            placeholder=" "
+            className={`peer block w-full rounded-xl border-2 p-3 pt-4 pb-1 text-sm 
+              border-gray-300 
+              focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
+              focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
+              transition-[color,box-shadow]`}
+          />
+          <label
+            htmlFor="venueSlug"
+            className={`absolute left-4 transition-all text-gray-400 text-sm 
+              ${
+                venueSlug
+                  ? "top-1 text-xs"
+                  : "top-3 peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm"
+              } 
+              peer-focus:top-1 peer-focus:text-xs`}
+          >
+            home-assignment-venue-helsinki
+          </label>
+        </div>
+        <div
+          className="text-sm transition-all duration-300 ease-in-out pl-4"
+          style={{
+            minHeight: "20px",
+            color: localError || error ? "red" : "transparent",
+          }}
+        >
+          {localError || error || " "}
+        </div>
       </div>
     </div>
   );

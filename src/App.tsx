@@ -1,12 +1,12 @@
-import "./App.css"; 
 import Calculator from "./components/Calculator";
+import Title from "./components/ui/Title";
 
 
 function App() {
 
   return (
     <>
-      <h1 className="font-mono font-extrabold">Wolt Assignment</h1>
+      <Title />
       <Calculator />
     </>
   );
