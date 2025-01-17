@@ -11,7 +11,7 @@ const CalculateButton: React.FC<CalculateButtonProps> = ({ onClick, disabled }) 
       type="submit"
       onClick={onClick}
       disabled={disabled}
-      className={`p-2 bg-green-500 text-white rounded ${
+      className={`button p-2 bg-blue text-white rounded ${
         disabled ? "opacity-50 cursor-not-allowed" : ""
       }`}
       data-test-id="calculateButton"

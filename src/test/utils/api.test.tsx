@@ -1,7 +1,7 @@
 import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { fetchVenueStatic, fetchVenueDynamic } from "../utils/api";
+import { fetchVenueStatic, fetchVenueDynamic } from "../../utils/api";
 
 describe("API Functions", () => {
   let mockAxios: MockAdapter;

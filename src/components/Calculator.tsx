@@ -98,7 +98,7 @@ const Calculator: React.FC = () => {
   const isFormValid = venueSlug && latitude && longitude && cartValue;
 
   return (
-    <div className="p-4 border" data-test-id="calculator">
+    <div data-test-id="calculator" className="text-left border">
       <form onSubmit={handleSubmit} className="p-4 space-y-4">
         <VenueSlugInput
           venueSlug={venueSlug}
@@ -112,15 +112,17 @@ const Calculator: React.FC = () => {
           setLatitude={setLatitude}
           setLongitude={setLongitude}
         />
+        <div className="flex flex-col space-y-2 items-center">
         {/* Pass handleLocationFound to GetLocationButton */}
         <GetLocationButton onLocationFound={handleLocationFound} />
-        {error && <p className="text-red-500">{error}</p>}
-        {venueError && <p className="text-red-500">{venueError}</p>}
+          {error && <p className="text-red-500">{error}</p>}
+          {venueError && <p className="text-red-500">{venueError}</p>}
         <CalculateButton
           onClick={handleSubmit}
           disabled={!isFormValid}
           data-test-id="calculateButton"
         />
+        </div>
       </form>
 
       {result && <PriceBreakdown result={result} />}

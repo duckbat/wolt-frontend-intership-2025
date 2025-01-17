@@ -14,7 +14,6 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
   setLatitude,
   setLongitude,
 }) => {
-  // Handle latitude input change
   const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^-?\d*\.?\d*$/.test(value)) {
@@ -22,7 +21,6 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
     }
   };
 
-  // Handle longitude input change
   const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^-?\d*\.?\d*$/.test(value)) {
@@ -31,8 +29,9 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
   };
 
   return (
-    <div className="flex items-center justify-center row-auto space-x-3">
-      <div>
+    <div className="flex space-x-4 p-4">
+      {/* Latitude Input */}
+      <div className="flex-1 input-with-placeholder">
         <label htmlFor="latitude" className="block mb-1">
           Latitude
         </label>
@@ -44,10 +43,12 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
           onChange={handleLatitudeChange}
           placeholder="60.17094"
           data-test-id="userLatitude"
+          className="w-full p-2"
         />
       </div>
 
-      <div>
+      {/* Longitude Input */}
+      <div className="flex-1 input-with-placeholder">
         <label htmlFor="longitude" className="block mb-1">
           Longitude
         </label>
@@ -59,6 +60,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
           onChange={handleLongitudeChange}
           placeholder="24.93087"
           data-test-id="userLongitude"
+          className="w-full p-2 borde"
         />
       </div>
     </div>

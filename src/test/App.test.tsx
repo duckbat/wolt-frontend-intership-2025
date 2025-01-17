@@ -6,9 +6,9 @@ describe("App", () => {
     render(<App />);
 
     // Verify that the heading is rendered
-    const heading = screen.getByRole("heading", { name: "Wolt Assignment" });
+    const heading = screen.getByRole("heading", { name: "Wolt Calculator" });
     expect(heading).toBeInTheDocument();
-    expect(heading).toHaveClass("font-mono", "font-extrabold");
+    expect(heading).toHaveClass("font-bold");
   });
 
   it("renders the Calculator component", () => {

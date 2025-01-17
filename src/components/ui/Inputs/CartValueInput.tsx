@@ -41,9 +41,6 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
           name="cartValue"
           onChange={handleInputChange}
           onBlur={handleBlur}
-          className={` ${
-            isEmpty ? "border-red-500" : "border-gray-300"
-          } `}
           placeholder="420.69"
           value={cartValue}
           data-test-id="cartValue"
