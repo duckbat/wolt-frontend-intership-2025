@@ -84,6 +84,41 @@ describe("Calculator Tests", () => {
     expect(screen.getByText(/Delivery Fee:/i)).toHaveTextContent("1.90 EUR");
     expect(screen.getByText(/Delivery Distance:/i)).toHaveTextContent("177 meters");
     expect(screen.getByText(/Small Order Surcharge:/i)).toHaveTextContent("0.00 EUR");
-    expect(screen.getByText(/Total Price:/i)).toHaveTextContent(" 11.90 EUR");
+    expect(screen.getByText(/Total Price:/i)).toHaveTextContent("11.90 EUR");
+  });
+
+  it("should handle additional test case and display the correct price breakdown", async () => {
+    render(<Calculator />);
+
+    // Input venue slug
+    fireEvent.change(screen.getByTestId("venueSlug"), {
+      target: { value: "home-assignment-venue-helsinki" },
+    });
+
+    // Input cart value
+    fireEvent.change(screen.getByTestId("cartValue"), {
+      target: { value: "9" },
+    });
+
+    // Input latitude and longitude
+    fireEvent.change(screen.getByTestId("userLatitude"), {
+      target: { value: "60.17332568937988" },
+    });
+    fireEvent.change(screen.getByTestId("userLongitude"), {
+      target: { value: "24.938220606032882" },
+    });
+
+    // Click calculate button
+    fireEvent.click(screen.getByTestId("calculateButton"));
+
+    // Wait for PriceBreakdown to render
+    await waitFor(() => expect(screen.queryByText(/Total Price:/i)).toBeInTheDocument());
+
+    // Assert the price breakdown
+    expect(screen.getByText(/Cart Value:/i)).toHaveTextContent("9.00 EUR");
+    expect(screen.getByText(/Delivery Fee:/i)).toHaveTextContent("2.90 EUR");
+    expect(screen.getByText(/Delivery Distance:/i)).toHaveTextContent("659 meters");
+    expect(screen.getByText(/Small Order Surcharge:/i)).toHaveTextContent("1.00 EUR");
+    expect(screen.getByText(/Total Price:/i)).toHaveTextContent("12.90 EUR");
   });
 });

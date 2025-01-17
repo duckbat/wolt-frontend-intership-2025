@@ -133,7 +133,15 @@
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
 <a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -142,8 +150,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -160,6 +167,15 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -212,7 +228,6 @@ interface GetLocationInputProps {
   setLongitude: (longitude: string) =&gt; void;
 }
 &nbsp;
-// Input fields for latitude and longitude
 const GetLocationInput: React.FC&lt;GetLocationInputProps&gt; = ({
   latitude,
   longitude,
@@ -234,39 +249,48 @@ const GetLocationInput: React.FC&lt;GetLocationInputProps&gt; = ({
   };
 &nbsp;
   return (
-    &lt;div className="flex space-x-4 p-4"&gt;
-      {/* Latitude Input */}
+    &lt;div className="flex flex-wrap gap-4 p-4"&gt;
       &lt;div className="flex-1 input-with-placeholder"&gt;
         &lt;label htmlFor="latitude" className="block mb-1"&gt;
           Latitude
         &lt;/label&gt;
-        &lt;input
-          id="latitude"
-          name="latitude"
-          type="text"
-          value={latitude}
-          onChange={handleLatitudeChange}
-          placeholder="60.17094"
-          data-test-id="userLatitude"
-          className="w-full p-2"
-        /&gt;
+        &lt;div className="relative w-full"&gt;
+          &lt;input
+            id="latitude"
+            name="latitude"
+            type="text"
+            value={latitude}
+            onChange={handleLatitudeChange}
+            placeholder="60.17094"
+            data-test-id="userLatitude"
+            className={`peer block w-full rounded-xl border-2 p-3 text-sm 
+              border-gray-300 
+              focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
+              focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
+              transition-[color,box-shadow]`}
+          /&gt;
+        &lt;/div&gt;
       &lt;/div&gt;
-&nbsp;
-      {/* Longitude Input */}
       &lt;div className="flex-1 input-with-placeholder"&gt;
         &lt;label htmlFor="longitude" className="block mb-1"&gt;
           Longitude
         &lt;/label&gt;
-        &lt;input
-          id="longitude"
-          name="longitude"
-          type="text"
-          value={longitude}
-          onChange={handleLongitudeChange}
-          placeholder="24.93087"
-          data-test-id="userLongitude"
-          className="w-full p-2 borde"
-        /&gt;
+        &lt;div className="relative w-full"&gt;
+          &lt;input
+            id="longitude"
+            name="longitude"
+            type="text"
+            value={longitude}
+            onChange={handleLongitudeChange}
+            placeholder="24.93087"
+            data-test-id="userLongitude"
+            className={`peer block w-full rounded-xl border-2 p-3 text-sm 
+              border-gray-300 
+              focus:outline-none focus:ring-[#009DE0] focus:ring-[1px] 
+              focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
+              transition-[color,box-shadow]`}
+          /&gt;
+        &lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
   );
@@ -280,7 +304,7 @@ export default GetLocationInput;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-01-17T15:16:57.008Z
+                at 2025-01-17T22:09:20.424Z
             </div>
         <script src="../../../../prettify.js"></script>
         <script>
