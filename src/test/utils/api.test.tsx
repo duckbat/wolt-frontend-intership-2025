@@ -26,7 +26,9 @@ describe("API Functions", () => {
       },
     };
     mockAxios
-      .onGet("https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/static")
+      .onGet(
+        "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/static"
+      )
       .reply(200, mockData);
 
     const result = await fetchVenueStatic("home-assignment-venue-helsinki");
@@ -36,15 +38,19 @@ describe("API Functions", () => {
   it("fetchVenueStatic - handles errors when fetching static data", async () => {
     // Mock error response for static data
     mockAxios
-      .onGet("https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/static")
+      .onGet(
+        "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/static"
+      )
       .reply(500);
 
-    // Spy on console.error to verify it's called
-    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    // Check on console.error to verify it's called
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
 
-    await expect(fetchVenueStatic("home-assignment-venue-helsinki")).rejects.toThrow(
-      "Failed to fetch venue static data."
-    );
+    await expect(
+      fetchVenueStatic("home-assignment-venue-helsinki")
+    ).rejects.toThrow("Failed to fetch venue static data.");
 
     // Verify console.error was called
     expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -78,7 +84,9 @@ describe("API Functions", () => {
       },
     };
     mockAxios
-      .onGet("https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/dynamic")
+      .onGet(
+        "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/dynamic"
+      )
       .reply(200, mockData);
 
     const result = await fetchVenueDynamic("home-assignment-venue-helsinki");
@@ -88,15 +96,19 @@ describe("API Functions", () => {
   it("fetchVenueDynamic - handles errors when fetching dynamic data", async () => {
     // Mock error response for dynamic data
     mockAxios
-      .onGet("https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/dynamic")
+      .onGet(
+        "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/dynamic"
+      )
       .reply(500);
 
-    // Spy on console.error to verify it's called
-    const consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    // Check on console.error to verify it's called
+    const consoleErrorSpy = vi
+      .spyOn(console, "error")
+      .mockImplementation(() => {});
 
-    await expect(fetchVenueDynamic("home-assignment-venue-helsinki")).rejects.toThrow(
-      "Failed to fetch venue dynamic data."
-    );
+    await expect(
+      fetchVenueDynamic("home-assignment-venue-helsinki")
+    ).rejects.toThrow("Failed to fetch venue dynamic data.");
 
     // Verify console.error was called
     expect(consoleErrorSpy).toHaveBeenCalledWith(

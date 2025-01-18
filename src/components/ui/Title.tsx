@@ -2,12 +2,12 @@ import React from "react";
 
 const Title: React.FC = () => {
   return (
-    <div className="max-w-xl mx-auto p-4">
-      <h1 className="font-bold mb-2">Wolt Calculator</h1>
-      <h2 className="break-words">
-        This is my solution to the Wolt 2025 Frontend Engineering Internship
-        assignment. Purpose of this app is to calculate the delivery fee with
-        the given instructions based on the cart value and delivery distance.
+    <div className="max-w-xl mx-auto px-4 pt-20 sm:pt-28 pb-4 text-center">
+      <h1 className="font-bold mb-3 text-4xl sm:text-7xl leading-tight">
+        Wolt Calculator
+      </h1>
+      <h2 className="text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed">
+        My solution to the Wolt 2025 Frontend Engineering Internship assignment.
       </h2>
     </div>
   );

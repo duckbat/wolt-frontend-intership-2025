@@ -5,7 +5,7 @@ describe("App", () => {
   it("renders the heading", () => {
     render(<App />);
 
-    // Verify that the heading is rendered
+    // Heading render
     const heading = screen.getByRole("heading", { name: "Wolt Calculator" });
     expect(heading).toBeInTheDocument();
     expect(heading).toHaveClass("font-bold");
@@ -14,8 +14,21 @@ describe("App", () => {
   it("renders the Calculator component", () => {
     render(<App />);
 
-    // Verify that the Calculator component is rendered
+    // Main component render
     const calculator = screen.getByTestId("calculator");
     expect(calculator).toBeInTheDocument();
+  });
+
+  it("renders the footer", () => {
+    render(<App />);
+
+    // Footer render
+    const footer = screen.getByRole("contentinfo");
+    expect(footer).toBeInTheDocument();
+
+    // Check footer content
+    const year = new Date().getFullYear();
+    expect(screen.getByText(`© ${year}`)).toBeInTheDocument();
+    expect(screen.getByText("Khai's Wolt assignment")).toBeInTheDocument();
   });
 });
