@@ -20,21 +20,40 @@ const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ result }) => {
   const totalPriceEur = (totalPrice / 100).toFixed(2);
 
   return (
-    <div className="px-8 text-xl text-left">
+    <div className="px-8 pb-20 sm:text-xl text-left">
       <hr className="pt-3" />
       <div className="space-y-2">
-        <h3 className="font-bold text-2xl">Price Breakdown</h3>
-        <p data-raw-value={cartValue}>Cart Value: {cartValueEur} EUR</p>
-        <p data-raw-value={deliveryFee}>Delivery Fee: {deliveryFeeEur} EUR</p>
-        <p data-raw-value={deliveryDistance}>
-          Delivery Distance:{deliveryDistance} meters
-        </p>
-        <p data-raw-value={smallOrderSurcharge}>
-          Small Order Surcharge: {surchargeEur} EUR
-        </p>
-        <p data-raw-value={totalPrice}>
-          Total Price: {totalPriceEur} EUR
-        </p>
+        <h3 className="font-bold text-xl sm:text-2xl">Price Breakdown</h3>
+        <div className="flex justify-between">
+          <p className="text-left">Cart Value:</p>
+          <p className="text-right" data-raw-value={cartValue}>
+            {cartValueEur} EUR
+          </p>
+        </div>
+        <div className="flex justify-between">
+          <p className="text-left">Delivery Fee:</p>
+          <p className="text-right" data-raw-value={deliveryFee}>
+            {deliveryFeeEur} EUR
+          </p>
+        </div>
+        <div className="flex justify-between">
+          <p className="text-left">Delivery Distance:</p>
+          <p className="text-right" data-raw-value={deliveryDistance}>
+            {deliveryDistance} m
+          </p>
+        </div>
+        <div className="flex justify-between">
+          <p className="text-left">Small Order Surcharge:</p>
+          <p className="text-right" data-raw-value={smallOrderSurcharge}>
+            {surchargeEur} EUR
+          </p>
+        </div>
+        <div className="flex justify-between font-bold">
+          <p className="text-left">Total Price:</p>
+          <p className="text-right" data-raw-value={totalPrice}>
+            {totalPriceEur} EUR
+          </p>
+        </div>
       </div>
     </div>
   );

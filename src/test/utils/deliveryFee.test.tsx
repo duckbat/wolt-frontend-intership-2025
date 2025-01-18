@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { calculateDeliveryFee } from "../../utils/calculation";
 import { VenueData } from "../../types";
 
-// Mock distance ranges
+// Mock ranges
 const mockDistanceRanges: VenueData["distanceRanges"] = [
   { min: 0, max: 500, a: 0, b: 0 },
   { min: 500, max: 1000, a: 100, b: 1 },
