@@ -1,34 +1,40 @@
 import { render, screen } from "@testing-library/react";
+import { describe, it, beforeEach, vi } from "vitest";
 import App from "../App";
 
-describe("App", () => {
-  it("renders the heading", () => {
-    render(<App />);
+vi.mock("../components/ui/SushiLottie.tsx", () => ({
+  __esModule: true,
+  default: () => <div data-test-id="mock-sushi-lottie" />,
+}));
 
-    // Heading render
-    const heading = screen.getByRole("heading", { name: "Wolt Calculator" });
+describe("App", () => {
+  beforeEach(() => {
+    // Render <App /> once before each test
+    render(<App />);
+  });
+
+  it("renders the heading with 'Wolt Calculator'", () => {
+    const heading = screen.getByRole("heading", { name: /wolt calculator/i });
     expect(heading).toBeInTheDocument();
     expect(heading).toHaveClass("font-bold");
   });
 
   it("renders the Calculator component", () => {
-    render(<App />);
-
-    // Main component render
     const calculator = screen.getByTestId("calculator");
     expect(calculator).toBeInTheDocument();
   });
 
   it("renders the footer", () => {
-    render(<App />);
-
-    // Footer render
     const footer = screen.getByRole("contentinfo");
     expect(footer).toBeInTheDocument();
 
-    // Check footer content
     const year = new Date().getFullYear();
     expect(screen.getByText(`© ${year}`)).toBeInTheDocument();
     expect(screen.getByText("Khai's Wolt assignment")).toBeInTheDocument();
+  });
+
+  it("renders the mocked SushiLottie animation", () => {
+    const mockAnimation = screen.getByTestId("mock-sushi-lottie");
+    expect(mockAnimation).toBeInTheDocument();
   });
 });

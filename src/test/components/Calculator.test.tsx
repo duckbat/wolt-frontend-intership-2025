@@ -26,6 +26,9 @@ vi.mock("../../utils/calculation", () => ({
     ) {
       return 659;
     }
+    if (lat1 === 99) {
+      throw new Error("Distance too far");
+    }
     return 0;
   }),
   calculateDeliveryFee: vi.fn((distance) => {
@@ -43,9 +46,12 @@ vi.mock("../../utils/calculation", () => ({
 Element.prototype.scrollIntoView = vi.fn();
 
 describe("Calculator Tests (refactored)", () => {
+  let mockOnPlayAnimation: ReturnType<typeof vi.fn>;
+
   beforeEach(() => {
     vi.clearAllMocks();
 
+    // By default, the fetchVenueData is successful
     (useVenueData as Mock).mockReturnValue({
       venueData: {
         location: [24.93087, 60.17094],
@@ -58,8 +64,11 @@ describe("Calculator Tests (refactored)", () => {
         orderMinimumNoSurcharge: 1000,
       },
       error: null,
-      fetchVenueData: vi.fn(),
+      fetchVenueData: vi.fn().mockResolvedValue(true),
     });
+
+    // Stub for onPlayAnimation
+    mockOnPlayAnimation = vi.fn();
   });
 
   /**
@@ -71,33 +80,36 @@ describe("Calculator Tests (refactored)", () => {
     lat,
     lng,
   }: {
-    slug: string;
-    cartValue: string;
-    lat: string;
-    lng: string;
+    slug?: string;
+    cartValue?: string;
+    lat?: string;
+    lng?: string;
   }) {
-    render(<Calculator />);
+    render(<Calculator onPlayAnimation={mockOnPlayAnimation} />);
 
-    fireEvent.change(screen.getByTestId("venueSlug"), {
-      target: { value: slug },
-    });
-    fireEvent.change(screen.getByTestId("cartValue"), {
-      target: { value: cartValue },
-    });
-    fireEvent.change(screen.getByTestId("userLatitude"), {
-      target: { value: lat },
-    });
-    fireEvent.change(screen.getByTestId("userLongitude"), {
-      target: { value: lng },
-    });
+    if (slug !== undefined) {
+      fireEvent.change(screen.getByTestId("venueSlug"), {
+        target: { value: slug },
+      });
+    }
+    if (cartValue !== undefined) {
+      fireEvent.change(screen.getByTestId("cartValue"), {
+        target: { value: cartValue },
+      });
+    }
+    if (lat !== undefined) {
+      fireEvent.change(screen.getByTestId("userLatitude"), {
+        target: { value: lat },
+      });
+    }
+    if (lng !== undefined) {
+      fireEvent.change(screen.getByTestId("userLongitude"), {
+        target: { value: lng },
+      });
+    }
 
     // Click the calculate button
     fireEvent.click(screen.getByTestId("calculateButton"));
-
-    // Wait for the PriceBreakdown to appear or partial text "Total Price:"
-    await waitFor(() =>
-      expect(screen.queryByText(/Total Price:/i)).toBeInTheDocument()
-    );
   }
 
   /**
@@ -140,7 +152,10 @@ describe("Calculator Tests (refactored)", () => {
       lng: "24.93087",
     });
 
-    // Check breakdown
+    await waitFor(() => {
+      expect(screen.queryByText(/Total Price:/i)).toBeInTheDocument();
+    });
+
     assertPriceBreakdown({
       expectedCartValue: "10.00 EUR",
       expectedDeliveryFee: "1.90 EUR",
@@ -148,6 +163,7 @@ describe("Calculator Tests (refactored)", () => {
       expectedSmallOrderSurcharge: "0.00 EUR",
       expectedTotalPrice: "11.90 EUR",
     });
+    expect(mockOnPlayAnimation).toHaveBeenCalled();
   });
 
   it("should complete user flow #2 (659m, cart=9EUR)", async () => {
@@ -158,7 +174,10 @@ describe("Calculator Tests (refactored)", () => {
       lng: "24.938220606032882",
     });
 
-    // Check breakdown
+    await waitFor(() => {
+      expect(screen.queryByText(/Total Price:/i)).toBeInTheDocument();
+    });
+
     assertPriceBreakdown({
       expectedCartValue: "9.00 EUR",
       expectedDeliveryFee: "2.90 EUR",
@@ -166,5 +185,46 @@ describe("Calculator Tests (refactored)", () => {
       expectedSmallOrderSurcharge: "1.00 EUR",
       expectedTotalPrice: "12.90 EUR",
     });
+    expect(mockOnPlayAnimation).toHaveBeenCalled();
+  });
+
+  it("should display error if fetchVenueData returns false (invalid slug)", async () => {
+    (useVenueData as Mock).mockReturnValue({
+      venueData: null,
+      error: null,
+      fetchVenueData: vi.fn().mockResolvedValue(false),
+    });
+
+    await fillFormAndSubmit({
+      slug: "invalid-slug",
+      cartValue: "10",
+      lat: "60.17094",
+      lng: "24.93087",
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Please, provide a valid venue slug.")
+      ).toBeInTheDocument();
+    });
+
+    expect(mockOnPlayAnimation).not.toHaveBeenCalled();
+  });
+
+  it("should handle distance error (e.g., out of range)", async () => {
+    await fillFormAndSubmit({
+      slug: "home-assignment-venue-helsinki",
+      cartValue: "10",
+      lat: "99", // triggers throw new Error("Distance too far")
+      lng: "24.93087",
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByText("Delivery is not available, you live too far.")
+      ).toBeInTheDocument();
+    });
+
+    expect(mockOnPlayAnimation).not.toHaveBeenCalled();
   });
 });

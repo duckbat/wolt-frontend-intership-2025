@@ -9,7 +9,11 @@ import PriceBreakdown from "./ui/PriceBreakdown";
 import CalculateButton from "./ui/Buttons/CalculateButton";
 import { CalculationResult } from "../types";
 
-const Calculator: React.FC = () => {
+interface CalculatorProps {
+  onPlayAnimation: () => void; // Provided by the parent (App)
+}
+
+const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
   const [venueSlug, setVenueSlug] = useState<string>("");
   const [latitude, setLatitude] = useState<string>("");
   const [longitude, setLongitude] = useState<string>("");
@@ -18,12 +22,12 @@ const Calculator: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const { venueData, error: venueError, fetchVenueData } = useVenueData();
-
   const breakdownRef = useRef<HTMLDivElement | null>(null);
 
   const handleLocationFound = (lat: number, lon: number) => {
     setLatitude(lat.toString());
     setLongitude(lon.toString());
+    onPlayAnimation();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,7 +59,6 @@ const Calculator: React.FC = () => {
         venueData.location[1],
         venueData.location[0]
       );
-
       const roundedDeliveryDistance = Math.ceil(deliveryDistance);
 
       const deliveryFee = calculateDeliveryFee(
@@ -80,6 +83,8 @@ const Calculator: React.FC = () => {
         totalPrice,
       });
       setError(null);
+
+      onPlayAnimation();
     } catch (err) {
       console.error("Error:", err);
       setError("Delivery is not available, you live too far.");
@@ -96,7 +101,10 @@ const Calculator: React.FC = () => {
   const isFormValid = venueSlug && latitude && longitude && cartValue;
 
   return (
-    <div data-test-id="calculator" className="text-left container max-w-xl mx-aut px-5">
+    <div
+      data-test-id="calculator"
+      className="text-left container max-w-xl mx-aut px-5"
+    >
       <form onSubmit={handleSubmit}>
         <VenueSlugInput
           venueSlug={venueSlug}
@@ -120,7 +128,6 @@ const Calculator: React.FC = () => {
           />
         </div>
       </form>
-
       <div ref={breakdownRef} className="mt-6">
         {result && <PriceBreakdown result={result} />}
       </div>
