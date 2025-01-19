@@ -8,9 +8,10 @@ export default defineConfig({
   test: {
     testTimeout: 10000, //for getLocationInput last test "slow one ;P"
     coverage: {
+      enabled: true,
       provider: "istanbul",
-      reporter: ['text', 'lcov'], // Generate LCOV and text reports
-      reportsDirectory: './coverage', // Default coverage directory
+      reporter: ['text', 'lcov', 'html'],
+      reportsDirectory: './coverage',
       include: ['src/**/*.{ts,tsx}'],
       exclude: ['node_modules', 'dist'],
     },

@@ -10,16 +10,14 @@
     "preview": "vite preview",
     "test": "vitest",
     "test-ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest --coverage"
   },
   "dependencies": {
     "axios": "^1.7.9",
-    "lodash.debounce": "^4.0.8",
     "lottie-react": "^2.4.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-geolocated": "^4.3.0",
-    "react-hook-form": "^7.54.2",
     "react-lottie": "^1.2.10",
     "ts-node": "^10.9.2",
     "zustand": "^5.0.3"
@@ -31,7 +29,6 @@
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^14.6.0",
     "@types/jest": "^29.5.14",
-    "@types/lodash.debounce": "^4.0.9",
     "@types/mocha": "^10.0.10",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
