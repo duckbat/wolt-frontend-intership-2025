@@ -8,7 +8,11 @@ export default defineConfig({
   test: {
     coverage: {
       provider: "istanbul",
-      reporter: ['text', 'json', 'html'],
+      reporter: ['text', 'lcov'], // Generate LCOV and text reports
+      reportsDirectory: './coverage', // Default coverage directory
+      include: ['src/**/*.{ts,tsx}'], // Files to include
+      exclude: ['node_modules', 'dist'], // Files to exclude
+      // reporter: ['text', 'json', 'html'],
     },
     environment: "jsdom",
     globals: true,
