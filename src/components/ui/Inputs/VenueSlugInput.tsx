@@ -14,73 +14,56 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
   error,
 }) => {
   const [localError, setLocalError] = useState<string>("");
-  const isInputFocused = useRef<boolean>(false); // Tracks input focus state
-  const debounceTimeout = useRef<NodeJS.Timeout | null>(null); // Tracks debounce timer
-  const inactivityTimeout = useRef<NodeJS.Timeout | null>(null); // Tracks inactivity timer
+  const isInputFocused = useRef<boolean>(false);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
+  // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setVenueSlug(value);
 
-    // Reset local error when typing
     if (localError) setLocalError("");
 
-    // Clear inactivity timer if user is typing
-    if (inactivityTimeout.current) {
-      clearTimeout(inactivityTimeout.current);
+    // Debounce the fetch call
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
     }
 
-    // Set inactivity timer
-    inactivityTimeout.current = setTimeout(() => {
-      console.log("Stopping fetch attempts after 3 seconds of inactivity");
-      if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
+    debounceTimeout.current = setTimeout(async () => {
+      if (value.trim() && isInputFocused.current) {
+        const success = await onFetch(value.trim());
+        if (!success) {
+          setLocalError("Failed to fetch venue data.");
+        }
       }
-    }, 3000); // 3 seconds
+    }, 1000); // Increased debounce timeout to 1 second
   };
 
+  // Function triggers when unfocusing from the input
   const handleBlur = async () => {
-    isInputFocused.current = false; // Mark input as not focused
+    isInputFocused.current = false;
     if (!venueSlug.trim()) {
       setLocalError("Venue slug is required.");
       return;
     }
 
+    // When unfocusing from the input it fetches the data. Made for accessibility purposes like Tab control
     const success = await onFetch(venueSlug.trim());
     if (!success) {
       setLocalError("Failed to fetch venue data.");
     }
   };
 
+  // Function triggers when focusing on the input
   const handleFocus = () => {
     isInputFocused.current = true;
   };
 
-  useEffect(() => {
-    if (!venueSlug.trim() || !isInputFocused.current) return;
-
-    debounceTimeout.current = setTimeout(async () => {
-      const success = await onFetch(venueSlug.trim());
-      if (!success) {
-        setLocalError("Failed to fetch venue data.");
-      }
-    }, 700); // Timeout for debounce
-
-    return () => {
-      if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
-      }
-    };
-  }, [venueSlug, onFetch]);
-
-  // Cleanup timers on unmount
+  // Cleanup the debounce timeout
   useEffect(() => {
     return () => {
       if (debounceTimeout.current) {
         clearTimeout(debounceTimeout.current);
-      }
-      if (inactivityTimeout.current) {
-        clearTimeout(inactivityTimeout.current);
       }
     };
   }, []);
@@ -105,6 +88,7 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
               focus:border-[#009DE0] focus:border-[2px] hover:border-[#009DE0] 
               transition-[color,box-shadow]`}
           />
+          {/* Animated placeholder */}
           <label
             htmlFor="venueSlug"
             className={`absolute left-4 transition-all text-gray-400 text-sm 
@@ -112,7 +96,7 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
                 venueSlug
                   ? "top-1 text-xs"
                   : "top-3 peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm"
-              } 
+              }
               peer-focus:top-1 peer-focus:text-xs`}
           >
             venue-helsinki

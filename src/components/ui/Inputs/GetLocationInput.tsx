@@ -15,6 +15,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
 }) => {
   const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    // Only allow numbers and decimal points
     if (/^-?\d*\.?\d*$/.test(value)) {
       setLatitude(value);
     }
@@ -22,6 +23,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
 
   const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    // Only allow numbers and decimal points
     if (/^-?\d*\.?\d*$/.test(value)) {
       setLongitude(value);
     }

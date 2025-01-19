@@ -14,6 +14,7 @@ const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ result }) => {
     totalPrice,
   } = result;
 
+  // Convert cents to euros for output
   const cartValueEur = (cartValue / 100).toFixed(2);
   const deliveryFeeEur = (deliveryFee / 100).toFixed(2);
   const surchargeEur = (smallOrderSurcharge / 100).toFixed(2);

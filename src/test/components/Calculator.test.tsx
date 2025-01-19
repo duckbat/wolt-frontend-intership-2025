@@ -51,7 +51,6 @@ describe("Calculator Tests (refactored)", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    // By default, the fetchVenueData is successful
     (useVenueData as Mock).mockReturnValue({
       venueData: {
         location: [24.93087, 60.17094],
@@ -71,9 +70,6 @@ describe("Calculator Tests (refactored)", () => {
     mockOnPlayAnimation = vi.fn();
   });
 
-  /**
-   * Helper to fill the form and click "calculateButton".
-   */
   async function fillFormAndSubmit({
     slug,
     cartValue,
@@ -112,9 +108,6 @@ describe("Calculator Tests (refactored)", () => {
     fireEvent.click(screen.getByTestId("calculateButton"));
   }
 
-  /**
-   * Helper to check the price breakdown lines in the UI.
-   */
   function assertPriceBreakdown({
     expectedCartValue,
     expectedDeliveryFee,

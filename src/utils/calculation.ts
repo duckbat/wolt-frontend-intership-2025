@@ -6,7 +6,7 @@ export const calculateDistance = (
   lat2: number,
   lon2: number
 ): number => {
-    // Haversine formula
+  // Haversine formula to calculate distance between two points
   const toRadians = (degrees: number) => (degrees * Math.PI) / 180;
   const earthRadiusInMeters = 6371e3;
 
@@ -16,12 +16,16 @@ export const calculateDistance = (
   const deltaLon = toRadians(lon2 - lon1);
   const a =
     Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-    Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
+    Math.cos(lat1Rad) *
+      Math.cos(lat2Rad) *
+      Math.sin(deltaLon / 2) *
+      Math.sin(deltaLon / 2);
 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return earthRadiusInMeters * c;
 };
 
+// Calculate delivery fee based on distance
 export const calculateDeliveryFee = (
   distance: number,
   distanceRanges: VenueData["distanceRanges"],

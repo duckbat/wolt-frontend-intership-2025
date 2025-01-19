@@ -2,7 +2,7 @@ import { forwardRef, useImperativeHandle, useRef } from "react";
 import Lottie, { LottieRefCurrentProps } from "lottie-react";
 import sushiJump from "../../assets/lottie/sushi-jump.json";
 
-// We'll expose a method called playAnimation() so the parent can trigger it.
+// playAnimation function is exposed to the parent component
 export interface SushiLottieRef {
   playAnimation: () => void;
 }

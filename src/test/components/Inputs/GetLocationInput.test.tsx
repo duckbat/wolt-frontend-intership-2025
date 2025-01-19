@@ -90,11 +90,9 @@ describe("GetLocationInput", () => {
     const latInput = screen.getByTestId("userLatitude") as HTMLInputElement;
     const lonInput = screen.getByTestId("userLongitude") as HTMLInputElement;
 
-    // Negative latitude
     fireEvent.change(latInput, { target: { value: "-60.1234" } });
     expect(mockSetLatitude).toHaveBeenLastCalledWith("-60.1234");
 
-    // Negative longitude
     fireEvent.change(lonInput, { target: { value: "-24.5678" } });
     expect(mockSetLongitude).toHaveBeenLastCalledWith("-24.5678");
   });

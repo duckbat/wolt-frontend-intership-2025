@@ -13,6 +13,7 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
 }) => {
   const [error, setError] = useState<string>("");
 
+  // Only allow numbers and up to 2 decimal places
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^\d*\.?\d{0,2}$/.test(value)) {
@@ -24,6 +25,7 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
     }
   };
 
+  // Show error if the input is empty
   const handleBlur = () => {
     if (!cartValue.trim()) {
       setError("Cart value is required.");

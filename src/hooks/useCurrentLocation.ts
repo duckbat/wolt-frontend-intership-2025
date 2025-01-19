@@ -25,6 +25,7 @@ export const useCurrentLocation = (): UseCurrentLocationReturn => {
     userDecisionTimeout: 10000, // 10 seconds
   });
 
+  // Map the error code to a user-friendly message
   const error = React.useMemo(() => {
     if (positionError) {
       switch (positionError.code) {
