@@ -20,10 +20,8 @@ describe("VenueSlugInput with real check for 'home-assignment-venue-helsinki'", 
       />
     );
 
-    // Blur the input => tries onFetch
     fireEvent.blur(screen.getByTestId("venueSlug"));
 
-    // Wait for the onFetch call
     await waitFor(() => {
       expect(mockOnFetch).toHaveBeenCalledWith(
         "home-assignment-venue-helsinki"
@@ -51,7 +49,6 @@ describe("VenueSlugInput with real check for 'home-assignment-venue-helsinki'", 
       expect(mockOnFetch).toHaveBeenCalledWith("some-other-slug");
     });
 
-    // Because mockOnFetch returns false for non-hel sinki slug => localError
     expect(screen.getByText("Failed to fetch venue data.")).toBeInTheDocument();
   });
 });

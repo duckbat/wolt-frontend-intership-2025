@@ -29,14 +29,10 @@ describe("CartValueInput", () => {
     fireEvent.change(input, { target: { value: "12.3" } });
     expect(mockSetCartValue).toHaveBeenLastCalledWith("12.3");
 
-    // Attempt adding a second decimal place
     fireEvent.change(input, { target: { value: "12.34" } });
     expect(mockSetCartValue).toHaveBeenLastCalledWith("12.34");
 
-    // Attempt adding a third decimal place => should NOT update
     fireEvent.change(input, { target: { value: "12.345" } });
-    // Because "12.345" is invalid, setCartValue shouldn't be called again
-    // The last call was "12.34"
     expect(mockSetCartValue).toHaveBeenCalledTimes(3);
   });
 
@@ -59,15 +55,12 @@ describe("CartValueInput", () => {
 
     const input = screen.getByTestId("cartValue");
 
-    // Blur first so we have an error
     fireEvent.blur(input);
     const errorMessage = getByText("Cart value is required.");
     expect(errorMessage).toBeInTheDocument();
 
-    // Now type something valid
     fireEvent.change(input, { target: { value: "12" } });
 
-    // Error should disappear
     const removedError = queryByText("Cart value is required.");
     expect(removedError).not.toBeInTheDocument();
   });
@@ -101,7 +94,6 @@ describe("CartValueInput", () => {
     const input = screen.getByTestId("cartValue");
     fireEvent.blur(input);
 
-    // Because it's empty, it triggers the local error, not the onBlur callback
     expect(mockOnBlur).not.toHaveBeenCalled();
   });
 });

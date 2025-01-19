@@ -31,7 +31,7 @@ const CalculateButton: React.FC<CalculateButtonProps> = ({
           color: error ? "red" : "transparent",
         }}
       >
-        {error || " "} {/* Prevent collapsing */}
+        {error || " "}
       </div>
     </div>
   );

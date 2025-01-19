@@ -46,7 +46,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
     }
 
     try {
-      await fetchVenueData(venueSlug);
+      // await fetchVenueData(venueSlug); // fetching venue data from the button click
 
       if (!venueData) {
         setError("Please, provide a valid venue slug.");
@@ -92,6 +92,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
     }
   };
 
+  // Scroll to the result when it's available
   useEffect(() => {
     if (result && breakdownRef.current) {
       breakdownRef.current.scrollIntoView({ behavior: "smooth" });
@@ -104,6 +105,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
     <div
       data-test-id="calculator"
       className="text-left container max-w-xl mx-aut px-5"
+      role="main"
     >
       <form onSubmit={handleSubmit}>
         <VenueSlugInput
@@ -120,7 +122,10 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
           setLongitude={setLongitude}
         />
         <div className="flex flex-col space-y-4 items-center">
-          <GetLocationButton onLocationFound={handleLocationFound} />
+          <GetLocationButton
+            onLocationFound={handleLocationFound}
+            onError={(error) => setError(error)} // Fixed location error
+          />
           <CalculateButton
             onClick={handleSubmit}
             disabled={!isFormValid}

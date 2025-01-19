@@ -1,7 +1,9 @@
 import axios from "axios";
 
-const BASE_URL = "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues";
+const BASE_URL =
+  "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues";
 
+// Fetches the static data for a venue
 export const fetchVenueStatic = async (venueSlug: string) => {
   try {
     const response = await axios.get(`${BASE_URL}/${venueSlug}/static`);
@@ -12,6 +14,7 @@ export const fetchVenueStatic = async (venueSlug: string) => {
   }
 };
 
+// Fetch dynamic data for a venue
 export const fetchVenueDynamic = async (venueSlug: string) => {
   try {
     const response = await axios.get(`${BASE_URL}/${venueSlug}/dynamic`);

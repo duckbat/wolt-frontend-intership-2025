@@ -1,8 +1,6 @@
-import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { render, fireEvent, screen } from "@testing-library/react";
 import GetLocationButton from "../../../components/ui/Buttons/GetLocationButton"; 
-// Adjust the import path based on your folder structure
 
 describe("GetLocationButton", () => {
   it("renders the button", () => {
@@ -14,7 +12,7 @@ describe("GetLocationButton", () => {
 
   it("calls onError when geolocation is not supported", () => {
     const onError = vi.fn();
-    (navigator as any).geolocation = undefined; // Simulate no geolocation
+    (navigator as any).geolocation = undefined;
     render(<GetLocationButton onLocationFound={vi.fn()} onError={onError} />);
     fireEvent.click(screen.getByTestId("getLocation"));
     expect(onError).toHaveBeenCalledWith(
@@ -38,7 +36,6 @@ describe("GetLocationButton", () => {
     const onError = vi.fn();
     (navigator as any).geolocation = {
       getCurrentPosition: (_success: any, error: (err: any) => void) => {
-        // numeric code 1 = PERMISSION_DENIED
         error({ code: 1 });
       },
     };
