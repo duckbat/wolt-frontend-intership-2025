@@ -46,7 +46,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
     }
 
     try {
-      // await fetchVenueData(venueSlug); // fetching venue data from the button click
+      // await fetchVenueData(venueSlug); // fetching venue data from the button click //TODO: ask teacher if needed
 
       if (!venueData) {
         setError("Please, provide a valid venue slug.");
