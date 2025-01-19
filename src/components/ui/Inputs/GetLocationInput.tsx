@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface GetLocationInputProps {
   latitude: string;
@@ -15,29 +15,62 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
 }) => {
   const [latitudeError, setLatitudeError] = useState<string | null>(null);
   const [longitudeError, setLongitudeError] = useState<string | null>(null);
+  const latitudeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const longitudeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(',', '.');
+    const value = e.target.value.replace(",", ".");
     if (/^-?\d*\.?\d*$/.test(value)) {
       setLatitude(value);
       setLatitudeError(null);
     } else {
-      setLatitudeError("Invalid latitude");
+      setLatitudeError("Invalid latitude.");
+
+      // Timeout for the error message
+      if (latitudeTimeoutRef.current) {
+        clearTimeout(latitudeTimeoutRef.current);
+      }
+
+      latitudeTimeoutRef.current = setTimeout(() => {
+        setLatitudeError(null);
+      }, 2500);
     }
   };
 
   const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let value = e.target.value.replace(',', '.');
+    const value = e.target.value.replace(",", ".");
     if (/^-?\d*\.?\d*$/.test(value)) {
       setLongitude(value);
       setLongitudeError(null);
     } else {
-      setLongitudeError("Invalid longitude");
+      setLongitudeError("Invalid longitude.");
+
+      // Timeout for the error message
+      if (longitudeTimeoutRef.current) {
+        clearTimeout(longitudeTimeoutRef.current);
+      }
+
+      longitudeTimeoutRef.current = setTimeout(() => {
+        setLongitudeError(null);
+      }, 2500);
     }
   };
 
+  useEffect(() => {
+    return () => {
+      // Cleanup timeouts
+      if (latitudeTimeoutRef.current) {
+        clearTimeout(latitudeTimeoutRef.current);
+      }
+      if (longitudeTimeoutRef.current) {
+        clearTimeout(longitudeTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <div className="flex flex-wrap gap-4 p-4">
+      {/* Latitude Input */}
       <div className="flex-1 input-with-placeholder">
         <label htmlFor="latitude" className="block mb-1">
           Latitude
@@ -68,6 +101,8 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
           </div>
         </div>
       </div>
+
+      {/* Longitude Input */}
       <div className="flex-1 input-with-placeholder">
         <label htmlFor="longitude" className="block mb-1">
           Longitude

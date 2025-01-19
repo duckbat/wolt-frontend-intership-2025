@@ -17,13 +17,22 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    let value = e.target.value.replace(',', '.');
     if (/^\d*\.?\d{0,2}$/.test(value)) {
       setCartValue(value);
       setError("");
       setTypeError(null);
     } else {
-      setTypeError("Please enter a valid cart number.");
+      setTypeError("Please try to enter a valid cart number.");
+
+      // Timeout for the error message
+      if (debounceTimeout.current){
+        clearTimeout(debounceTimeout.current);
+      }
+
+      debounceTimeout.current = setTimeout(() => {
+        setTypeError(null);
+      }, 2500);
     }
   };
 
