@@ -16,6 +16,7 @@ describe("API Functions", () => {
     mockAxios.reset();
   });
 
+  // Test if the fetchVenueStatic function fetches static data correctly
   it("fetchVenueStatic - successfully fetches static data", async () => {
     // Mock successful response for static data
     const mockData = {
@@ -35,6 +36,7 @@ describe("API Functions", () => {
     expect(result).toEqual(mockData);
   });
 
+  // Test if the fetchVenueStatic function handles errors correctly
   it("fetchVenueStatic - handles errors when fetching static data", async () => {
     // Mock error response for static data
     mockAxios
@@ -62,6 +64,7 @@ describe("API Functions", () => {
     consoleErrorSpy.mockRestore();
   });
 
+  // Test if the fetchVenueDynamic function fetches dynamic data correctly
   it("fetchVenueDynamic - successfully fetches dynamic data", async () => {
     // Mock successful response for dynamic data
     const mockData = {
@@ -93,6 +96,7 @@ describe("API Functions", () => {
     expect(result).toEqual(mockData);
   });
 
+  // Test if the fetchVenueDynamic function handles errors correctly
   it("fetchVenueDynamic - handles errors when fetching dynamic data", async () => {
     // Mock error response for dynamic data
     mockAxios

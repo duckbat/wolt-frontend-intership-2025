@@ -87,7 +87,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
       onPlayAnimation();
     } catch (err) {
       console.error("Error:", err);
-      setError("Delivery is not available, you live too far, or given location is invalid.");
+      setError("Delivery is not available. You live too far, or given location is invalid.");
       setResult(null);
     }
   };

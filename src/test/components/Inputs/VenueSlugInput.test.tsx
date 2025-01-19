@@ -3,21 +3,25 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import VenueSlugInput from "../../../components/ui/Inputs/VenueSlugInput";
 
 describe("VenueSlugInput", () => {
+  // Mocks for the tests
   let mockOnFetch: ReturnType<typeof vi.fn>;
   let mockSetVenueSlug: ReturnType<typeof vi.fn>;
 
+  // Mock hooks and utility functions
   beforeEach(() => {
     vi.useFakeTimers();
     mockOnFetch = vi.fn().mockResolvedValue(true);
     mockSetVenueSlug = vi.fn();
   });
 
+  // Clear mocks and timers after each test
   afterEach(() => {
     vi.runOnlyPendingTimers();
     vi.useRealTimers();
     vi.clearAllMocks();
   });
 
+  // Tests if the VenueSlugInput renders correctly
   it("renders the input and label correctly", () => {
     render(
       <VenueSlugInput
@@ -34,6 +38,7 @@ describe("VenueSlugInput", () => {
     expect(labelElement).toBeInTheDocument();
   });
 
+  // Tests if the input calls setVenueSlug with the correct value
   it("updates setVenueSlug on user typing", () => {
     render(
       <VenueSlugInput
@@ -44,10 +49,12 @@ describe("VenueSlugInput", () => {
     );
 
     const input = screen.getByTestId("venueSlug") as HTMLInputElement;
-    fireEvent.change(input, { target: { value: "new-slug" } });
-    expect(mockSetVenueSlug).toHaveBeenCalledWith("new-slug");
+    fireEvent.change(input, { target: { value: "venue" } });
+    expect(mockSetVenueSlug).toHaveBeenCalledWith("venue");
   });
 
+  // Tests if the input displays an error if the user types an invalid venue slug
+  //TODO: check this test up
   it("displays prop-level error if provided", () => {
     render(
       <VenueSlugInput

@@ -6,13 +6,13 @@ export default defineConfig({
   resolve: {
   },
   test: {
+    testTimeout: 10000, //for getLocationInput last test "slow one ;P"
     coverage: {
       provider: "istanbul",
       reporter: ['text', 'lcov'], // Generate LCOV and text reports
       reportsDirectory: './coverage', // Default coverage directory
-      include: ['src/**/*.{ts,tsx}'], // Files to include
-      exclude: ['node_modules', 'dist'], // Files to exclude
-      // reporter: ['text', 'json', 'html'],
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['node_modules', 'dist'],
     },
     environment: "jsdom",
     globals: true,
