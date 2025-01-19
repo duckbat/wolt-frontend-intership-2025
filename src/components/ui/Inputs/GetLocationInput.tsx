@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 
 interface GetLocationInputProps {
   latitude: string;
@@ -15,36 +15,26 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
 }) => {
   const [latitudeError, setLatitudeError] = useState<string | null>(null);
   const [longitudeError, setLongitudeError] = useState<string | null>(null);
-  // const isInputFocused = useRef<boolean>(false);
-  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    let value = e.target.value.replace(',', '.');
     if (/^-?\d*\.?\d*$/.test(value)) {
       setLatitude(value);
       setLatitudeError(null);
     } else {
-      setLatitudeError("Please enter a valid latitude number.");
+      setLatitudeError("Invalid latitude");
     }
   };
 
   const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    let value = e.target.value.replace(',', '.');
     if (/^-?\d*\.?\d*$/.test(value)) {
       setLongitude(value);
       setLongitudeError(null);
     } else {
-      setLongitudeError("Please enter a valid longitude number.");
+      setLongitudeError("Invalid longitude");
     }
   };
-
-  useEffect(() => {
-    return () => {
-      if (debounceTimeout.current) {
-        clearTimeout(debounceTimeout.current);
-      }
-    };
-  }, []);
 
   return (
     <div className="flex flex-wrap gap-4 p-4">
