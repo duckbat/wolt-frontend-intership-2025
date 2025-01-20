@@ -119,6 +119,8 @@ npm run test-ui
 ![coverage_report](docs/coverage-report.png)
 ![test_report](docs/test-report.png)
 
+---
+
 ### Might be interesting 👀
 #### Interesting Problems faced and implemented solutions for them
 1. *Optimizing API Calls*
