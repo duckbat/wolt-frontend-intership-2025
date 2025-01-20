@@ -121,8 +121,8 @@ npm run test-ui
 
 ---
 
-### Might be interesting 👀
-#### Interesting Problems faced and implemented solutions for them
+## Might be interesting 👀
+### Interesting Problems faced and implemented solutions for them
 1. *Optimizing API Calls*
 - **Problem**: Venue slug form was constantly fetched after writing an input, resulting in uncessary fetching.
 - **Solution**: Added useEffect with debounceTimeout to stop fetching after 2.5 second of input. Reduced unnecessary API calls.
