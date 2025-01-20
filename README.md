@@ -129,8 +129,8 @@ npm run test-ui
 
 2. *Improving Accessibility*
 - **Problem**: Accessibility test showed that once person moves our from the input using Tab, it doesnt trigger API fetch.
-- **Solution**: Added onBlur function. It fetches API once user loses focus on the input form
+- **Solution**: Created onBlur function that fetches additional API once user loses focus on the input form
 
 3. *Input Design*
 - **Problem**: Wanted to create animated placeholder for Venue Input
-- **Solution**: Added an additional label instead of placeholderwith focus transition in TailwindCSS
+- **Solution**: Solved with adding additional label instead of placeholderwith focus transition in TailwindCSS
