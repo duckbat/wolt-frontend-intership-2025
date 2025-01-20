@@ -8,6 +8,7 @@ This project is a solution for the **Wolt 2025 Frontend Engineering Internship [
 The application was built using mainly **Vite** + **React** and **TypeScript**
 
 Continuous Integration is enabled by **Github Actions**.
+Location (latitude and long to latitude and longitude) calculations are calculated with **Harvesine formula**.
 
 ---
 
@@ -117,3 +118,17 @@ npm run test-ui
 #### Coverage and Test Report for the project :D
 ![coverage_report](docs/coverage-report.png)
 ![test_report](docs/test-report.png)
+
+### Might be interesting 👀
+#### Interesting Problems faced and implemented solutions for them
+1. *Optimizing API Calls*
+- **Problem**: Venue slug form was constantly fetched after writing an input, resulting in uncessary fetching.
+- **Solution**: Added useEffect with debounceTimeout to stop fetching after 2.5 second of input. Reduced unnecessary API calls.
+
+2. *Improving Accessibility*
+- **Problem**: Accessibility test showed that once person moves our from the input using Tab, it doesnt trigger API fetch.
+- **Solution**: Added onBlur function. It fetches API once user loses focus on the input form
+
+3. *Input Design*
+- **Problem**: Wanted to create animated placeholder for Venue Input
+- **Solution**: Added an additional label instead of placeholderwith focus transition in TailwindCSS
