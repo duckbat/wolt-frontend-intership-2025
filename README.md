@@ -5,6 +5,7 @@
 This project is a solution for the **Wolt 2025 Frontend Engineering Internship [Assignment](https://github.com/woltapp/frontend-internship-2025/tree/main)**. It implements a **Delivery Order Price Calculator** that calculates delivery fees, surcharges, and total prices based on user input and [Static](https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/static) and [Dynamic](https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues/home-assignment-venue-helsinki/dynamic) API data.
 
 The application was built using mainly **Vite** + **React** and **TypeScript**
+Continuous Integration is enabled by **Github Actions**.
 
 ---
 
