@@ -46,7 +46,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
     }
 
     try {
-      // await fetchVenueData(venueSlug); // fetching venue data from the button click //TODO: ask teacher if needed
+      // await fetchVenueData(venueSlug); // fetching venue data from the button click
 
       if (!venueData) {
         setError("Please, provide a valid venue slug.");
@@ -124,7 +124,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
         <div className="flex flex-col space-y-4 items-center">
           <GetLocationButton
             onLocationFound={handleLocationFound}
-            onError={(error) => setError(error)} // Fixed location error
+            onError={(error) => setError(error)}
           />
           <CalculateButton
             onClick={handleSubmit}
