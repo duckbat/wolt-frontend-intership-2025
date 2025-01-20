@@ -111,5 +111,6 @@ npm run coverage
 npm run test-ui
 ```
 
-#### Coverage Report for the projeect :D
+#### Coverage and Test Report for the project :D
 ![coverage_report](docs/coverage-report.png)
+![test_report](docs/test-report.png)
