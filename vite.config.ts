@@ -13,7 +13,7 @@ export default defineConfig({
       reporter: ['text', 'lcov', 'html'],
       reportsDirectory: './coverage',
       include: ['src/**/*.{ts,tsx}'],
-      exclude: ['node_modules', 'dist'],
+      exclude: ['node_modules', 'dist', 'src/test/**/*'],
     },
     environment: "jsdom",
     globals: true,

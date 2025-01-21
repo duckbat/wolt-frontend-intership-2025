@@ -51,4 +51,46 @@ describe("GetLocationButton", () => {
       "Permission denied. Please enable location access."
     );
   });
+  // Test if error is called when location information is unavailable
+  it("calls onError with correct message if location information is unavailable", () => {
+    const onError = vi.fn();
+    (navigator as any).geolocation = {
+      getCurrentPosition: (_success: any, error: (err: any) => void) => {
+        error({ code: 2 });
+      },
+    };
+    render(<GetLocationButton onLocationFound={vi.fn()} onError={onError} />);
+    fireEvent.click(screen.getByTestId("getLocation"));
+    expect(onError).toHaveBeenCalledWith(
+      "Location information is unavailable."
+    );
+  });
+
+  // Test if error is called when the request to get location timed out
+  it("calls onError with correct message if the request to get location timed out", () => {
+    const onError = vi.fn();
+    (navigator as any).geolocation = {
+      getCurrentPosition: (_success: any, error: (err: any) => void) => {
+        error({ code: 3 });
+      },
+    };
+    render(<GetLocationButton onLocationFound={vi.fn()} onError={onError} />);
+    fireEvent.click(screen.getByTestId("getLocation"));
+    expect(onError).toHaveBeenCalledWith(
+      "The request to get location timed out."
+    );
+  });
+
+  // Test if error is called when an unknown error occurs
+  it("calls onError with correct message if an unknown error occurs", () => {
+    const onError = vi.fn();
+    (navigator as any).geolocation = {
+      getCurrentPosition: (_success: any, error: (err: any) => void) => {
+        error({ code: 999 });
+      },
+    };
+    render(<GetLocationButton onLocationFound={vi.fn()} onError={onError} />);
+    fireEvent.click(screen.getByTestId("getLocation"));
+    expect(onError).toHaveBeenCalledWith("An unknown error occurred.");
+  });
 });

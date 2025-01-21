@@ -3,6 +3,7 @@ import { describe, it, beforeEach, vi, Mock } from "vitest";
 import Calculator from "../../components/Calculator";
 import { useVenueData } from "../../hooks/useVenueData";
 
+// TODO: fill the coverage for this test
 // Mock hooks and utility functions
 vi.mock("../../hooks/useVenueData", () => ({
   useVenueData: vi.fn(),
