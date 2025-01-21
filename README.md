@@ -8,7 +8,7 @@ This project is a solution for the **Wolt 2025 Frontend Engineering Internship [
 The application was built using mainly **Vite** + **React** and **TypeScript**
 
 Continuous Integration is enabled by **Github Actions**.
-Location (latitude and long to latitude and longitude) calculations are calculated with **Harvesine formula**.
+Location (latitude and long to latitude and longitude) calculations are calculated with [**Harvesine formula**](https://www.geeksforgeeks.org/haversine-formula-to-find-distance-between-two-points-on-a-sphere/).
 
 ---
 
