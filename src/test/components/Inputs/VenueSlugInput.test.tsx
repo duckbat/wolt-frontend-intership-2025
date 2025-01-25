@@ -2,7 +2,6 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import VenueSlugInput from "../../../components/ui/Inputs/VenueSlugInput";
 
-//TODO: fill the coverage for this test
 describe("VenueSlugInput", () => {
   // Mocks for the tests
   let mockOnFetch: ReturnType<typeof vi.fn>;

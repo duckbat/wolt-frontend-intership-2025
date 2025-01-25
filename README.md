@@ -143,3 +143,5 @@ npm run test-ui
 - Instead of normal forms, react-hook-form considers as an industrial standart and would be practical to use it instead of the normal forms.
 2. *Deployment*
 - Deploy to Netlify will let me get comfortable with deployment process and understand my project even better.
+3. *Better coverage*
+- Aiming for 100% of test coverage from every criteria in the project.

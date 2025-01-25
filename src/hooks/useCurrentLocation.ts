@@ -1,5 +1,5 @@
 import React from "react";
-import { useGeolocated } from "react-geolocated"; // TODO: For third party libraries it is better to create an abstraction
+import { useGeolocationService } from "../utils/geolocation";
 
 interface UseCurrentLocationReturn {
   latitude: number | null;
@@ -10,22 +10,17 @@ interface UseCurrentLocationReturn {
   error: string | null;
 }
 
-// Custom hook to get the current location of the user
 export const useCurrentLocation = (): UseCurrentLocationReturn => {
+  // Use the abstracted service instead of direct import
   const {
     coords,
     isGeolocationAvailable,
     isGeolocationEnabled,
     getPosition,
     positionError,
-  } = useGeolocated({
-    positionOptions: {
-      enableHighAccuracy: true,
-    },
-    userDecisionTimeout: 10000, // 10 seconds
-  });
+  } = useGeolocationService();
 
-  // Map the error code to a user-friendly message
+  // Error handling remains in the UI-focused hook
   const error = React.useMemo(() => {
     if (positionError) {
       switch (positionError.code) {
