@@ -19,7 +19,7 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
 
   // Handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(',', '.');
+    const value = e.target.value;
     setVenueSlug(value);
 
     if (localError) setLocalError("");
