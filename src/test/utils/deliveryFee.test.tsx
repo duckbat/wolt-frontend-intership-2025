@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { calculateDeliveryFee } from "../../utils/calculation";
-import { VenueData } from "../../types";
+import { VenueData } from "../../types/venueData.types";
+
 
 // Mock ranges
 const mockDistanceRanges: VenueData["distanceRanges"] = [
