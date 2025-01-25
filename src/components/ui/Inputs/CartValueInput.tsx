@@ -18,7 +18,7 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.replace(',', '.');;
     if (CART_VALUE_REGEXP.test(value)) {
       setCartValue(value);
       setError("");
