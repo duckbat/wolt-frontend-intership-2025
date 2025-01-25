@@ -52,7 +52,7 @@ describe("API Functions", () => {
 
     await expect(
       fetchVenueStatic("home-assignment-venue-helsinki")
-    ).rejects.toThrow("Failed to fetch venue static data.");
+    ).rejects.toThrow("Failed to fetch venue static data");
 
     // Verify console.error was called
     expect(consoleErrorSpy).toHaveBeenCalledWith(
@@ -112,7 +112,7 @@ describe("API Functions", () => {
 
     await expect(
       fetchVenueDynamic("home-assignment-venue-helsinki")
-    ).rejects.toThrow("Failed to fetch venue dynamic data.");
+    ).rejects.toThrow("Failed to fetch venue dynamic data");
 
     // Verify console.error was called
     expect(consoleErrorSpy).toHaveBeenCalledWith(

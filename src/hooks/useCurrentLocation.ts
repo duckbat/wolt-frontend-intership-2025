@@ -30,13 +30,13 @@ export const useCurrentLocation = (): UseCurrentLocationReturn => {
     if (positionError) {
       switch (positionError.code) {
         case positionError.PERMISSION_DENIED:
-          return "Permission denied. Please enable location access.";
+          return "Permission denied. Please enable location access";
         case positionError.POSITION_UNAVAILABLE:
-          return "Location information is unavailable.";
+          return "Location information is unavailable";
         case positionError.TIMEOUT:
-          return "The request to get location timed out.";
+          return "The request to get location timed out";
         default:
-          return "An unknown error occurred.";
+          return "An unknown error occurred";
       }
     }
     return null;

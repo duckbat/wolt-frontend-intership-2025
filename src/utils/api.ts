@@ -9,7 +9,7 @@ export const fetchVenueStatic = async (venueSlug: string) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching venue static data:", error);
-    throw new Error("Failed to fetch venue static data.");
+    throw new Error("Failed to fetch venue static data");
   }
 };
 
@@ -20,6 +20,6 @@ export const fetchVenueDynamic = async (venueSlug: string) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching venue dynamic data:", error);
-    throw new Error("Failed to fetch venue dynamic data.");
+    throw new Error("Failed to fetch venue dynamic data");
   }
 };

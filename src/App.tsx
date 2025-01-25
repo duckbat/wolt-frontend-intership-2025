@@ -1,20 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import Title from "./components/ui/Title";
 import Calculator from "./components/Calculator";
 import Footer from "./components/ui/Footer";
-import SushiLottie, { SushiLottieRef } from "./components/ui/SushiLottie";
-
-// TODO: Separete hooks into a separate file
-// Custom hook for animation handling
-const useSushiLottie = () => {
-  const sushiRef = useRef<SushiLottieRef | null>(null);
-
-  const handlePlayAnimation = () => {
-    sushiRef.current?.playAnimation();
-  };
-
-  return { sushiRef, handlePlayAnimation };
-};
+import SushiLottie from "./components/ui/SushiLottie";
+import useSushiLottie from "./hooks/useSushiLottie";
 
 const App: React.FC = () => {
   const { sushiRef, handlePlayAnimation } = useSushiLottie();

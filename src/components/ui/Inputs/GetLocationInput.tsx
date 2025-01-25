@@ -27,7 +27,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
       setLatitude(value);
       setLatitudeError(null);
     } else {
-      setLatitudeError("Invalid latitude.");
+      setLatitudeError("Invalid latitude");
 
       // Timeout for the error message
       if (latitudeTimeoutRef.current) {
@@ -47,7 +47,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
       setLongitude(value);
       setLongitudeError(null);
     } else {
-      setLongitudeError("Invalid longitude.");
+      setLongitudeError("Invalid longitude");
 
       // Timeout for the error message
       if (longitudeTimeoutRef.current) {

@@ -204,7 +204,7 @@ describe("Calculator Tests (refactored)", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Please, provide a valid venue slug.")
+        screen.getByText("Please, provide a valid venue slug")
       ).toBeInTheDocument();
     });
 
@@ -223,7 +223,7 @@ describe("Calculator Tests (refactored)", () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "Delivery is not available. You live too far, or given location is invalid."
+          "Delivery is not available. You live too far, or given location is invalid"
         )
       ).toBeInTheDocument();
     });

@@ -32,8 +32,8 @@ export const useVenueData = () => {
       setError(null);
       return true; // success
     } catch (err) {
-      console.error("Failed to fetch venue data.", err);
-      setError("Failed to fetch venue data.");
+      console.error("Failed to fetch venue data", err);
+      setError("Failed to fetch venue data");
       setVenueData(null);
       return false; // failure
     }

@@ -29,7 +29,7 @@ describe("CartValueInput", () => {
     expect(mockSetCartValue).toHaveBeenLastCalledWith("12.34");
 
     fireEvent.change(input, { target: { value: "12.345" } });
-    expect(mockSetCartValue).toHaveBeenCalledTimes(3);
+    expect(mockSetCartValue).toHaveBeenLastCalledWith("12.34");
   });
 
   // Tests if user leaves the input empty, it shows an error
@@ -41,7 +41,7 @@ describe("CartValueInput", () => {
     const input = screen.getByTestId("cartValue");
     fireEvent.blur(input);
 
-    const errorMessage = getByText("Cart value is required.");
+    const errorMessage = getByText("Cart value is required");
     expect(errorMessage).toBeInTheDocument();
   });
 
@@ -54,12 +54,12 @@ describe("CartValueInput", () => {
     const input = screen.getByTestId("cartValue");
 
     fireEvent.blur(input);
-    const errorMessage = getByText("Cart value is required.");
+    const errorMessage = getByText("Cart value is required");
     expect(errorMessage).toBeInTheDocument();
 
     fireEvent.change(input, { target: { value: "12" } });
 
-    const removedError = queryByText("Cart value is required.");
+    const removedError = queryByText("Cart value is required");
     expect(removedError).not.toBeInTheDocument();
   });
 
@@ -102,17 +102,31 @@ describe("CartValueInput", () => {
     fireEvent.change(input, { target: { value: "invalid" } });
 
     const errorMessage = screen.getByText(
-      "Please try to enter a valid cart number."
+      "Please try to enter a valid cart number"
     );
     expect(errorMessage).toBeInTheDocument();
 
     await waitFor(
       () => {
         expect(
-          screen.queryByText("Please try to enter a valid cart number.")
+          screen.queryByText("Please try to enter a valid cart number")
         ).not.toBeInTheDocument();
       },
       { timeout: 3500 } // Allow 3.5 seconds to ensure it clears after 2.5 seconds
     );
+  });
+
+  // Tests if the input shows an error for a cart value of 0 on blur
+  it("shows an error for a cart value of 0 on blur", async () => {
+    const mockSetCartValue = vi.fn();
+    render(<CartValueInput cartValue="0" setCartValue={mockSetCartValue} />);
+
+    const input = screen.getByTestId("cartValue") as HTMLInputElement;
+
+    fireEvent.blur(input);
+
+    await waitFor(() => {
+      expect(screen.getByText("Cart value cannot be 0")).toBeInTheDocument();
+    });
   });
 });

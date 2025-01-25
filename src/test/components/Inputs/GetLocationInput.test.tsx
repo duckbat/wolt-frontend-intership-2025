@@ -120,26 +120,26 @@ describe("GetLocationInput", () => {
 
     // Type invalid input for latitude
     fireEvent.change(latInput, { target: { value: "abc" } });
-    const latError = screen.getByText("Invalid latitude.");
+    const latError = screen.getByText("Invalid latitude");
     expect(latError).toBeInTheDocument();
 
     await waitFor(
       () => {
-        expect(screen.queryByText("Invalid latitude.")).not.toBeInTheDocument();
+        expect(screen.queryByText("Invalid latitude")).not.toBeInTheDocument();
       },
       { timeout: 3000 } // Allow 3 seconds to ensure it clears after 2.5 seconds
     );
 
     // Type invalid input for longitude
     fireEvent.change(lonInput, { target: { value: "24.93awawdwdojajd" } });
-    const lonError = screen.getByText("Invalid longitude.");
+    const lonError = screen.getByText("Invalid longitude");
     expect(lonError).toBeInTheDocument();
 
     // Wait for the error to disappear after 3 seconds
     await waitFor(
       () => {
         expect(
-          screen.queryByText("Invalid longitude.")
+          screen.queryByText("Invalid longitude")
         ).not.toBeInTheDocument();
       },
       { timeout: 3000 } // Allow 3 seconds to ensure it clears after 2.5 seconds

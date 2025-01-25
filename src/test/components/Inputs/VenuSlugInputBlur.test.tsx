@@ -52,6 +52,6 @@ describe("VenueSlugInput with real check for correct venue", () => {
       expect(mockOnFetch).toHaveBeenCalledWith("blablabla");
     });
 
-    expect(screen.getByText("Failed to fetch venue data.")).toBeInTheDocument();
+    expect(screen.getByText("Failed to fetch venue data")).toBeInTheDocument();
   });
 });

@@ -33,24 +33,24 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
       if (value.trim() && isInputFocused.current) {
         const success = await onFetch(value.trim());
         if (!success) {
-          setLocalError("Failed to fetch venue data.");
+          setLocalError("Failed to fetch venue data");
         }
       }
-    }, 500); // Increased debounce timeout to 0.5 second
+    }, 750); // Increased debounce timeout to 0.5 second
   };
 
   // Function triggers when unfocusing from the input
   const handleBlur = async () => {
     isInputFocused.current = false;
     if (!venueSlug.trim()) {
-      setLocalError("Venue slug is required.");
+      setLocalError("Venue slug is required");
       return;
     }
 
     // When unfocusing from the input it fetches the data. Made for accessibility purposes like Tab control
     const success = await onFetch(venueSlug.trim());
     if (!success) {
-      setLocalError("Failed to fetch venue data.");
+      setLocalError("Failed to fetch venue data");
     }
   };
 

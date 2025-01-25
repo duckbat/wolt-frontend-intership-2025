@@ -5,7 +5,6 @@ interface CartValueInputProps {
   setCartValue: (value: string) => void;
   onBlur?: () => void;
 }
-
 const CART_VALUE_REGEXP = /^\d*\.?\d{0,2}$/;
 
 const CartValueInput: React.FC<CartValueInputProps> = ({
@@ -25,10 +24,10 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
       setError("");
       setTypeError(null);
     } else {
-      setTypeError("Please try to enter a valid cart number.");
+      setTypeError("Please try to enter a valid cart number");
 
       // Timeout for the error message
-      if (debounceTimeout.current){
+      if (debounceTimeout.current) {
         clearTimeout(debounceTimeout.current);
       }
 
@@ -41,7 +40,9 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
   const handleBlur = () => {
     isInputFocused.current = false;
     if (!cartValue.trim()) {
-      setError("Cart value is required.");
+      setError("Cart value is required");
+    } else if (parseFloat(cartValue) === 0) {
+      setError("Cart value cannot be 0");
     } else if (onBlur) {
       onBlur();
     }
