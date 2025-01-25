@@ -64,6 +64,9 @@ Location (latitude and long to latitude and longitude) calculations are calculat
    ```bash
    npm install
 
+2. Create a `.env` file in the project root and include the following:
+  ```dotenv
+VITE_BASE_URL="https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues"
    ```
 2. Run the code:
    ```bash
