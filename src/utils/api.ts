@@ -1,8 +1,6 @@
 import axios from "axios";
 
-// TODO: Store this value in .env file and update Documentation to mention this
-const BASE_URL =
-  "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // Fetches the static data for a venue
 export const fetchVenueStatic = async (venueSlug: string) => {

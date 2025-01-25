@@ -8,6 +8,7 @@ vi.mock("../../hooks/useVenueData", () => ({
   useVenueData: vi.fn(),
 }));
 
+// Test the calculation functions
 vi.mock("../../utils/calculation", () => ({
   calculateDistance: vi.fn((lat1, lon1, lat2, lon2) => {
     if (
@@ -51,6 +52,7 @@ describe("Calculator Tests (refactored)", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
+    // Mock the venue data
     (useVenueData as Mock).mockReturnValue({
       venueData: {
         location: [24.93087, 60.17094],
@@ -70,6 +72,7 @@ describe("Calculator Tests (refactored)", () => {
     mockOnPlayAnimation = vi.fn();
   });
 
+  // Helper function to fill the form and submit
   async function fillFormAndSubmit({
     slug,
     cartValue,
@@ -108,6 +111,7 @@ describe("Calculator Tests (refactored)", () => {
     fireEvent.click(screen.getByTestId("calculateButton"));
   }
 
+  // Helper function to assert the price breakdown
   function assertPriceBreakdown({
     expectedCartValue,
     expectedDeliveryFee,
@@ -137,7 +141,8 @@ describe("Calculator Tests (refactored)", () => {
     expect(screen.getByText(expectedTotalPrice)).toBeInTheDocument();
   }
 
-  it("should complete user flow #1 (177m, cart=10EUR)", async () => {
+  // Test the Calculator's first userflow with distance < 500 and cart value 10
+  it("should complete userflow #1", async () => {
     await fillFormAndSubmit({
       slug: "home-assignment-venue-helsinki",
       cartValue: "10",
@@ -159,7 +164,8 @@ describe("Calculator Tests (refactored)", () => {
     expect(mockOnPlayAnimation).toHaveBeenCalled();
   });
 
-  it("should complete user flow #2 (659m, cart=9EUR)", async () => {
+  // Test the Calculator's second userflow with distance > 500 and cart value 9
+  it("should complete userflow #2", async () => {
     await fillFormAndSubmit({
       slug: "home-assignment-venue-helsinki",
       cartValue: "9",
@@ -181,7 +187,8 @@ describe("Calculator Tests (refactored)", () => {
     expect(mockOnPlayAnimation).toHaveBeenCalled();
   });
 
-  it("should display error if fetchVenueData returns false (invalid slug)", async () => {
+  // Test the Calculator's third userflow with invalid slug
+  it("should display error for userflow #3 if fetchVenueData returns false (wrong slug)", async () => {
     (useVenueData as Mock).mockReturnValue({
       venueData: null,
       error: null,
@@ -189,7 +196,7 @@ describe("Calculator Tests (refactored)", () => {
     });
 
     await fillFormAndSubmit({
-      slug: "invalid-slug",
+      slug: "slurp-juice",
       cartValue: "10",
       lat: "60.17094",
       lng: "24.93087",
@@ -204,17 +211,20 @@ describe("Calculator Tests (refactored)", () => {
     expect(mockOnPlayAnimation).not.toHaveBeenCalled();
   });
 
-  it("should handle distance error (e.g., out of range)", async () => {
+  // Test the Calculator's fourth userflow with large distance
+  it("should display distance error for userflow #4", async () => {
     await fillFormAndSubmit({
       slug: "home-assignment-venue-helsinki",
       cartValue: "10",
       lat: "99", // triggers throw new Error("Distance too far")
-      lng: "24.93087",
+      lng: "99.93087",
     });
 
     await waitFor(() => {
       expect(
-        screen.getByText("Delivery is not available, you live too far.")
+        screen.getByText(
+          "Delivery is not available. You live too far, or given location is invalid."
+        )
       ).toBeInTheDocument();
     });
 

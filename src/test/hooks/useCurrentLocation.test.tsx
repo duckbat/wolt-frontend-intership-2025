@@ -9,10 +9,10 @@ vi.mock("react-geolocated", () => ({
 
 describe("useCurrentLocation", () => {
   beforeEach(() => {
-    // Clear all mocks before each test
     vi.clearAllMocks();
   });
 
+  // Test to check if the hook returns the correct location values
   it("returns latitude and longitude when geolocation is available and enabled", () => {
     // Mock useGeolocated to return coordinates
     (useGeolocated as jest.Mock).mockReturnValue({
@@ -32,6 +32,7 @@ describe("useCurrentLocation", () => {
     expect(result.current.error).toBeNull();
   });
 
+  // Test to check if the hook returns null for latitude and longitude when geolocation is not available
   it("returns null for latitude and longitude when geolocation is not available", () => {
     // Mock useGeolocated to indicate geolocation is not available
     (useGeolocated as jest.Mock).mockReturnValue({
@@ -51,6 +52,7 @@ describe("useCurrentLocation", () => {
     expect(result.current.error).toBeNull();
   });
 
+  // Test to check if the hook returns null for latitude and longitude when geolocation is not enabled
   it("returns null for latitude and longitude when geolocation is not enabled", () => {
     // Mock useGeolocated to indicate geolocation is not enabled
     (useGeolocated as jest.Mock).mockReturnValue({
@@ -70,6 +72,7 @@ describe("useCurrentLocation", () => {
     expect(result.current.error).toBeNull();
   });
 
+  // Test to check if the hook returns an error when geolocation fails
   it("returns an error when permission is denied", () => {
     // Mock useGeolocated to return a permission denied error
     const mockError = {
@@ -91,6 +94,7 @@ describe("useCurrentLocation", () => {
     expect(result.current.error).toBe("Permission denied. Please enable location access.");
   });
 
+  // Test to check if the hook returns an error when location is unavailable
   it("returns an error when location is unavailable", () => {
     // Mock useGeolocated to return a location unavailable error
     const mockError = {
@@ -112,6 +116,7 @@ describe("useCurrentLocation", () => {
     expect(result.current.error).toBe("Location information is unavailable.");
   });
 
+  // Test to check if the hook returns an error when the request times out
   it("returns an error when the request times out", () => {
     // Mock useGeolocated to return a timeout error
     const mockError = {
@@ -133,6 +138,7 @@ describe("useCurrentLocation", () => {
     expect(result.current.error).toBe("The request to get location timed out.");
   });
 
+  // Test to check if the hook returns an error for unknown errors
   it("returns an error for unknown errors", () => {
     // Mock useGeolocated to return an unknown error
     const mockError = {

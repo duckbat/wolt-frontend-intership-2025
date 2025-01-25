@@ -36,7 +36,7 @@ const VenueSlugInput: React.FC<VenueSlugInputProps> = ({
           setLocalError("Failed to fetch venue data.");
         }
       }
-    }, 1000); // Increased debounce timeout to 1 second
+    }, 500); // Increased debounce timeout to 0.5 second
   };
 
   // Function triggers when unfocusing from the input

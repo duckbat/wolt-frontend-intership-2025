@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 interface CartValueInputProps {
   cartValue: string;
@@ -14,27 +14,50 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
   onBlur,
 }) => {
   const [error, setError] = useState<string>("");
+  const [typeError, setTypeError] = useState<string | null>(null);
+  const isInputFocused = useRef<boolean>(false);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  // Only allow numbers and up to 2 decimal places
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (CART_VALUE_REGEXP.test(value)) {
       setCartValue(value);
+      setError("");
+      setTypeError(null);
+    } else {
+      setTypeError("Please try to enter a valid cart number.");
 
-      if (error) {
-        setError("");
+      // Timeout for the error message
+      if (debounceTimeout.current){
+        clearTimeout(debounceTimeout.current);
       }
+
+      debounceTimeout.current = setTimeout(() => {
+        setTypeError(null);
+      }, 2500);
     }
   };
 
-  // Show error if the input is empty
   const handleBlur = () => {
+    isInputFocused.current = false;
     if (!cartValue.trim()) {
       setError("Cart value is required.");
     } else if (onBlur) {
       onBlur();
     }
   };
+
+  const handleFocus = () => {
+    isInputFocused.current = true;
+  };
+
+  useEffect(() => {
+    return () => {
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+    };
+  }, []);
 
   return (
     <div className="px-4">
@@ -46,11 +69,12 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
           <input
             id="cartValue"
             name="cartValue"
-            type="number"
+            type="text"
+            value={cartValue}
             onChange={handleInputChange}
             onBlur={handleBlur}
+            onFocus={handleFocus}
             placeholder="16.12"
-            value={cartValue}
             data-test-id="cartValue"
             className={`peer block w-full rounded-xl border-2 p-3 text-sm 
               border-gray-300 
@@ -63,10 +87,10 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
           className="text-sm transition-all duration-300 ease-in-out pl-4"
           style={{
             minHeight: "20px",
-            color: error ? "red" : "transparent",
+            color: error || typeError ? "red" : "transparent",
           }}
         >
-          {error || " "}
+          {error || typeError || " "}
         </div>
       </div>
     </div>

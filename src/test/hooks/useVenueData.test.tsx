@@ -4,6 +4,7 @@ import { fetchVenueStatic, fetchVenueDynamic } from "../../utils/api";
 import { vi } from "vitest";
 import { act } from "react";
 
+//TODO: review this test
 // Mock the api module
 vi.mock("../../utils/api", () => ({
   fetchVenueStatic: vi.fn(),
@@ -16,6 +17,7 @@ describe("useVenueData", () => {
     vi.clearAllMocks();
   });
 
+  // Test if hook fetches data from API correctly
   it("fetches venue data successfully", async () => {
     // Mock successful responses for static and dynamic data
     const mockStaticData = {
@@ -74,6 +76,7 @@ describe("useVenueData", () => {
     });
   });
 
+  // Test if hook handles errors when fetching data
   it("handles errors when fetching venue data", async () => {
     // Mock an error response for fetchVenueStatic
     (fetchVenueStatic as jest.Mock).mockRejectedValue(new Error("Failed to fetch data"));
@@ -94,6 +97,7 @@ describe("useVenueData", () => {
     });
   });
 
+  // Test if hook trims the venueSlug before fetching data
   it("trims the venueSlug before fetching data", async () => {
     // Mock successful responses for static and dynamic data
     const mockStaticData = {

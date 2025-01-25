@@ -14,6 +14,7 @@ interface CalculatorProps {
   onPlayAnimation: () => void; // Provided by the parent (App)
 }
 
+// TODO: separate logic to different hooks
 const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
   const [venueSlug, setVenueSlug] = useState<string>("");
   const [latitude, setLatitude] = useState<string>("");
@@ -88,7 +89,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
       onPlayAnimation();
     } catch (err) {
       console.error("Error:", err);
-      setError("Delivery is not available, you live too far.");
+      setError("Delivery is not available. You live too far, or given location is invalid.");
       setResult(null);
     }
   };
@@ -125,7 +126,7 @@ const Calculator: React.FC<CalculatorProps> = ({ onPlayAnimation }) => {
         <div className="flex flex-col space-y-4 items-center">
           <GetLocationButton
             onLocationFound={handleLocationFound}
-            onError={(error) => setError(error)} // Fixed location error
+            onError={(error) => setError(error)}
           />
           <CalculateButton
             onClick={handleSubmit}
