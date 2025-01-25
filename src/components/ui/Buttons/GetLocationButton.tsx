@@ -11,7 +11,7 @@ const GetLocationButton: React.FC<GetLocationButtonProps> = ({
 }) => {
   const handleGetLocation = () => {
     if (!navigator.geolocation) {
-      onError?.("Geolocation is not supported by your browser.");
+      onError?.("Geolocation is not supported by your browser");
       return;
     }
 
@@ -22,19 +22,19 @@ const GetLocationButton: React.FC<GetLocationButtonProps> = ({
         onLocationFound(latitude, longitude);
       },
       (error) => {
-        let errorMessage = "Unable to get your location.";
+        let errorMessage = "Unable to get your location";
         switch (error.code) {
           case 1:
-            errorMessage = "Permission denied. Please enable location access.";
+            errorMessage = "Permission denied. Please enable location access";
             break;
           case 2:
-            errorMessage = "Location information is unavailable.";
+            errorMessage = "Location information is unavailable";
             break;
           case 3:
-            errorMessage = "The request to get location timed out.";
+            errorMessage = "The request to get location timed out";
             break;
           default:
-            errorMessage = "An unknown error occurred.";
+            errorMessage = "An unknown error occurred";
         }
         onError?.(errorMessage);
       },

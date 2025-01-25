@@ -55,7 +55,6 @@ describe("VenueSlugInput", () => {
   });
 
   // Tests if the input displays an error if the user types an invalid venue slug
-  //TODO: check this test up
   it("displays prop-level error if provided", () => {
     render(
       <VenueSlugInput

@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const BASE_URL =
-  "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 // Fetches the static data for a venue
 export const fetchVenueStatic = async (venueSlug: string) => {
@@ -10,7 +9,7 @@ export const fetchVenueStatic = async (venueSlug: string) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching venue static data:", error);
-    throw new Error("Failed to fetch venue static data.");
+    throw new Error("Failed to fetch venue static data");
   }
 };
 
@@ -21,6 +20,6 @@ export const fetchVenueDynamic = async (venueSlug: string) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching venue dynamic data:", error);
-    throw new Error("Failed to fetch venue dynamic data.");
+    throw new Error("Failed to fetch venue dynamic data");
   }
 };

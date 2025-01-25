@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { fetchVenueStatic, fetchVenueDynamic } from "../utils/api";
-import { VenueData } from "../types";
+import { VenueData } from "../types/venueData.types";
 
 export const useVenueData = () => {
   const [venueData, setVenueData] = useState<VenueData | null>(null);
@@ -32,8 +32,8 @@ export const useVenueData = () => {
       setError(null);
       return true; // success
     } catch (err) {
-      console.error("Failed to fetch venue data.", err);
-      setError("Failed to fetch venue data.");
+      console.error("Failed to fetch venue data", err);
+      setError("Failed to fetch venue data");
       setVenueData(null);
       return false; // failure
     }

@@ -1,11 +1,11 @@
-import React from "react";
-import { CalculationResult } from "../../types";
+import { forwardRef } from "react";
+import { CalculationResult } from "../../types/calculationResult.types";
 
 interface PriceBreakdownProps {
   result: CalculationResult;
 }
 
-const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ result }) => {
+const PriceBreakdown = forwardRef<HTMLDivElement, PriceBreakdownProps>(({ result }, ref) => {
   const {
     cartValue,
     deliveryFee,
@@ -21,7 +21,7 @@ const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ result }) => {
   const totalPriceEur = (totalPrice / 100).toFixed(2);
 
   return (
-    <div className="px-8 pb-20 sm:text-xl text-left">
+    <div ref={ref} className="px-8 pb-20 sm:text-xl text-left">
       <hr className="pt-3" />
       <div className="space-y-2">
         <h3 className="font-bold text-xl sm:text-2xl">Price Breakdown</h3>
@@ -58,6 +58,6 @@ const PriceBreakdown: React.FC<PriceBreakdownProps> = ({ result }) => {
       </div>
     </div>
   );
-};
+});
 
 export default PriceBreakdown;

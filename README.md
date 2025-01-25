@@ -64,6 +64,9 @@ Location (latitude and long to latitude and longitude) calculations are calculat
    ```bash
    npm install
 
+2. Create a `.env` file in the project root and include the following:
+   ```dotenv
+   VITE_BASE_URL="https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues"
    ```
 2. Run the code:
    ```bash
@@ -134,3 +137,9 @@ npm run test-ui
 3. *Input Design*
 - **Problem**: Wanted to create animated placeholder for Venue Input
 - **Solution**: Solved with adding additional label instead of placeholderwith focus transition in TailwindCSS
+
+### Further improvements
+1. *Implement React-hook-form*
+- Instead of normal forms, react-hook-form considers as an industrial standart and would be practical to use it instead of the normal forms.
+2. *Deployment*
+- Deploy to Netlify will let me get comfortable with deployment process and understand my project even better.

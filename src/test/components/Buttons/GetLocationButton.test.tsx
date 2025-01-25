@@ -18,7 +18,7 @@ describe("GetLocationButton", () => {
     render(<GetLocationButton onLocationFound={vi.fn()} onError={onError} />);
     fireEvent.click(screen.getByTestId("getLocation"));
     expect(onError).toHaveBeenCalledWith(
-      "Geolocation is not supported by your browser."
+      "Geolocation is not supported by your browser"
     );
   });
 
@@ -48,7 +48,7 @@ describe("GetLocationButton", () => {
     render(<GetLocationButton onLocationFound={vi.fn()} onError={onError} />);
     fireEvent.click(screen.getByTestId("getLocation"));
     expect(onError).toHaveBeenCalledWith(
-      "Permission denied. Please enable location access."
+      "Permission denied. Please enable location access"
     );
   });
   // Test if error is called when location information is unavailable
@@ -62,7 +62,7 @@ describe("GetLocationButton", () => {
     render(<GetLocationButton onLocationFound={vi.fn()} onError={onError} />);
     fireEvent.click(screen.getByTestId("getLocation"));
     expect(onError).toHaveBeenCalledWith(
-      "Location information is unavailable."
+      "Location information is unavailable"
     );
   });
 
@@ -77,7 +77,7 @@ describe("GetLocationButton", () => {
     render(<GetLocationButton onLocationFound={vi.fn()} onError={onError} />);
     fireEvent.click(screen.getByTestId("getLocation"));
     expect(onError).toHaveBeenCalledWith(
-      "The request to get location timed out."
+      "The request to get location timed out"
     );
   });
 
@@ -91,6 +91,6 @@ describe("GetLocationButton", () => {
     };
     render(<GetLocationButton onLocationFound={vi.fn()} onError={onError} />);
     fireEvent.click(screen.getByTestId("getLocation"));
-    expect(onError).toHaveBeenCalledWith("An unknown error occurred.");
+    expect(onError).toHaveBeenCalledWith("An unknown error occurred");
   });
 });

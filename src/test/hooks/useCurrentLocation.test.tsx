@@ -91,7 +91,7 @@ describe("useCurrentLocation", () => {
 
     const { result } = renderHook(() => useCurrentLocation());
 
-    expect(result.current.error).toBe("Permission denied. Please enable location access.");
+    expect(result.current.error).toBe("Permission denied. Please enable location access");
   });
 
   // Test to check if the hook returns an error when location is unavailable
@@ -113,7 +113,7 @@ describe("useCurrentLocation", () => {
 
     const { result } = renderHook(() => useCurrentLocation());
 
-    expect(result.current.error).toBe("Location information is unavailable.");
+    expect(result.current.error).toBe("Location information is unavailable");
   });
 
   // Test to check if the hook returns an error when the request times out
@@ -135,7 +135,7 @@ describe("useCurrentLocation", () => {
 
     const { result } = renderHook(() => useCurrentLocation());
 
-    expect(result.current.error).toBe("The request to get location timed out.");
+    expect(result.current.error).toBe("The request to get location timed out");
   });
 
   // Test to check if the hook returns an error for unknown errors
@@ -157,6 +157,6 @@ describe("useCurrentLocation", () => {
 
     const { result } = renderHook(() => useCurrentLocation());
 
-    expect(result.current.error).toBe("An unknown error occurred.");
+    expect(result.current.error).toBe("An unknown error occurred");
   });
 });

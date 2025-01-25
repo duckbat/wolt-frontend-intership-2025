@@ -7,6 +7,8 @@ interface GetLocationInputProps {
   setLongitude: (longitude: string) => void;
 }
 
+const LOCATION_REGEXP = /^-?\d*\.?\d*$/;
+
 const GetLocationInput: React.FC<GetLocationInputProps> = ({
   latitude,
   longitude,
@@ -19,12 +21,13 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
   const longitudeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(",", ".");
-    if (/^-?\d*\.?\d*$/.test(value)) {
+    const value = e.target.value;
+    // Only allow numbers and decimal points
+    if (LOCATION_REGEXP.test(value)) {
       setLatitude(value);
       setLatitudeError(null);
     } else {
-      setLatitudeError("Invalid latitude.");
+      setLatitudeError("Invalid latitude");
 
       // Timeout for the error message
       if (latitudeTimeoutRef.current) {
@@ -38,12 +41,13 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
   };
 
   const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(",", ".");
-    if (/^-?\d*\.?\d*$/.test(value)) {
+    const value = e.target.value;
+    // Only allow numbers and decimal points
+    if (LOCATION_REGEXP.test(value)) {
       setLongitude(value);
       setLongitudeError(null);
     } else {
-      setLongitudeError("Invalid longitude.");
+      setLongitudeError("Invalid longitude");
 
       // Timeout for the error message
       if (longitudeTimeoutRef.current) {

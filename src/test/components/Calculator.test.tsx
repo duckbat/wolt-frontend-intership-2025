@@ -3,7 +3,6 @@ import { describe, it, beforeEach, vi, Mock } from "vitest";
 import Calculator from "../../components/Calculator";
 import { useVenueData } from "../../hooks/useVenueData";
 
-// TODO: fill the coverage for this test
 // Mock hooks and utility functions
 vi.mock("../../hooks/useVenueData", () => ({
   useVenueData: vi.fn(),
@@ -205,7 +204,7 @@ describe("Calculator Tests (refactored)", () => {
 
     await waitFor(() => {
       expect(
-        screen.getByText("Please, provide a valid venue slug.")
+        screen.getByText("Please, provide a valid venue slug")
       ).toBeInTheDocument();
     });
 
@@ -224,7 +223,7 @@ describe("Calculator Tests (refactored)", () => {
     await waitFor(() => {
       expect(
         screen.getByText(
-          "Delivery is not available. You live too far, or given location is invalid."
+          "Delivery is not available. You live too far, or given location is invalid"
         )
       ).toBeInTheDocument();
     });

@@ -1,4 +1,4 @@
-import { VenueData } from "../types";
+import { VenueData } from "../types/venueData.types";
 
 export const calculateDistance = (
   lat1: number,

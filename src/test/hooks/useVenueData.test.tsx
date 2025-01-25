@@ -4,7 +4,6 @@ import { fetchVenueStatic, fetchVenueDynamic } from "../../utils/api";
 import { vi } from "vitest";
 import { act } from "react";
 
-//TODO: review this test
 // Mock the api module
 vi.mock("../../utils/api", () => ({
   fetchVenueStatic: vi.fn(),
@@ -92,7 +91,7 @@ describe("useVenueData", () => {
     await waitFor(() => {
       expect(result.current.venueData).toBeNull();
       expect(result.current.error).toBe(
-        "Failed to fetch venue data."
+        "Failed to fetch venue data"
       );
     });
   });
