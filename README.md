@@ -139,9 +139,9 @@ npm run test-ui
 - **Solution**: Solved with adding additional label instead of placeholderwith focus transition in TailwindCSS
 
 ### Further improvements
-1. *Implement React-hook-form*
-- Instead of normal forms, react-hook-form considers as an industrial standart and would be practical to use it instead of the normal forms.
+1. *Implement [React-hook-form](https://dev.to/this-is-learning/wrapping-library-in-a-react-hook-193e)*
+- Instead of normal forms, [react-hook-form](https://dev.to/this-is-learning/wrapping-library-in-a-react-hook-193e) is considered an industry standard and would be practical to use it instead of basic forms.
 2. *Deployment*
-- Deploy to Netlify will let me get comfortable with deployment process and understand my project even better.
+- Deploying to Netlify or other cloud services will help me get comfortable with the deployment process and understand my project even better.
 3. *Better coverage*
-- Aiming for 100% of test coverage from every criteria in the project.
+- Aim for 100% test coverage for every aspect of the project.
