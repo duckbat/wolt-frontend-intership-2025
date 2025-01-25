@@ -7,6 +7,8 @@ interface GetLocationInputProps {
   setLongitude: (longitude: string) => void;
 }
 
+const LOCATION_REGEXP = /^-?\d*\.?\d*$/;
+
 const GetLocationInput: React.FC<GetLocationInputProps> = ({
   latitude,
   longitude,
@@ -16,7 +18,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
   const handleLatitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Only allow numbers and decimal points
-    if (/^-?\d*\.?\d*$/.test(value)) {
+    if (LOCATION_REGEXP.test(value)) {
       setLatitude(value);
     }
   };
@@ -24,7 +26,7 @@ const GetLocationInput: React.FC<GetLocationInputProps> = ({
   const handleLongitudeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     // Only allow numbers and decimal points
-    if (/^-?\d*\.?\d*$/.test(value)) {
+    if (LOCATION_REGEXP.test(value)) {
       setLongitude(value);
     }
   };

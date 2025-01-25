@@ -1,6 +1,5 @@
 import React from "react";
 
-//TODO: Under review "Ask teacher" Good for Refactoring ?
 const CURRENT_YEAR = new Date().getFullYear();
 const FOOTER_TEXT = "Khai's Wolt assignment";
 

@@ -4,6 +4,7 @@ import Calculator from "./components/Calculator";
 import Footer from "./components/ui/Footer";
 import SushiLottie, { SushiLottieRef } from "./components/ui/SushiLottie";
 
+// TODO: Separete hooks into a separate file
 // Custom hook for animation handling
 const useSushiLottie = () => {
   const sushiRef = useRef<SushiLottieRef | null>(null);

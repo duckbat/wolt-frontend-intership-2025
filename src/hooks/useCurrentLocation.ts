@@ -1,5 +1,5 @@
 import React from "react";
-import { useGeolocated } from "react-geolocated";
+import { useGeolocated } from "react-geolocated"; // TODO: For third party libraries it is better to create an abstraction
 
 interface UseCurrentLocationReturn {
   latitude: number | null;

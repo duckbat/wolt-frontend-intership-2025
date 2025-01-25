@@ -7,7 +7,8 @@ import CartValueInput from "./ui/Inputs/CartValueInput";
 import GetLocationInput from "./ui/Inputs/GetLocationInput";
 import PriceBreakdown from "./ui/PriceBreakdown";
 import CalculateButton from "./ui/Buttons/CalculateButton";
-import { CalculationResult } from "../types";
+import { CalculationResult } from "../types/calculationResult.types";
+
 
 interface CalculatorProps {
   onPlayAnimation: () => void; // Provided by the parent (App)

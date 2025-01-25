@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// TODO: Store this value in .env file and update Documentation to mention this
 const BASE_URL =
   "https://consumer-api.development.dev.woltapi.com/home-assignment-api/v1/venues";
 

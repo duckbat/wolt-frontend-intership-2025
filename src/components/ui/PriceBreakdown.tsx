@@ -1,5 +1,6 @@
 import React from "react";
-import { CalculationResult } from "../../types";
+import { CalculationResult } from "../../types/calculationResult.types";
+
 
 interface PriceBreakdownProps {
   result: CalculationResult;

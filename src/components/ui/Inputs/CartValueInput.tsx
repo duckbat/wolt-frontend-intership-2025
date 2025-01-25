@@ -6,6 +6,8 @@ interface CartValueInputProps {
   onBlur?: () => void;
 }
 
+const CART_VALUE_REGEXP = /^\d*\.?\d{0,2}$/;
+
 const CartValueInput: React.FC<CartValueInputProps> = ({
   cartValue,
   setCartValue,
@@ -16,7 +18,7 @@ const CartValueInput: React.FC<CartValueInputProps> = ({
   // Only allow numbers and up to 2 decimal places
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (/^\d*\.?\d{0,2}$/.test(value)) {
+    if (CART_VALUE_REGEXP.test(value)) {
       setCartValue(value);
 
       if (error) {

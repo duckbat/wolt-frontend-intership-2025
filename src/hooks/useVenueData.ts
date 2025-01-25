@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { fetchVenueStatic, fetchVenueDynamic } from "../utils/api";
-import { VenueData } from "../types";
+import { VenueData } from "../types/venueData.types";
 
 export const useVenueData = () => {
   const [venueData, setVenueData] = useState<VenueData | null>(null);
