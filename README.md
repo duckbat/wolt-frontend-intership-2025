@@ -34,7 +34,6 @@ Location (latitude and long to latitude and longitude) calculations are calculat
 ### **Utilities**
 
 - [**Axios**](https://www.npmjs.com/package/axios): For making API requests.
-- [**Zustand**](https://www.npmjs.com/package/zustand): For state management.
 
 ### **Styling and Animations**
 
@@ -145,3 +144,5 @@ npm run test-ui
 - Deploying to Netlify or other cloud services will help me get comfortable with the deployment process and understand my project even better.
 3. *Better coverage*
 - Aim for 100% test coverage for every aspect of the project.
+4. *Zustand as state manager*
+- For managing global state (venue data, calculation results) more efficiently with simpler API, better TypeScript support, and reduced prop drilling compared to current React state implementation.
